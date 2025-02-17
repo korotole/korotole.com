@@ -5,7 +5,6 @@ import (
 	"encoding/hex"
 	"log"
 	"os"
-	"path/filepath"
 	"time"
 )
 
@@ -24,5 +23,6 @@ func GetBaseDir() string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	return filepath.Dir(ex)
+
+	return ex
 }

@@ -1,0 +1,40 @@
+services:
+  website:
+    build:
+      context: ./website
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+    networks:
+      - korotole_network
+    restart: unless-stopped
+
+  bot:
+    build:
+      context: ./bot
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    networks:
+      - korotole_network
+    restart: unless-stopped
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - korotole_network
+    volumes:
+      - redis_data:/data
+
+volumes:
+  redis_data:
+
+networks:
+  korotole_network:
+    driver: bridge

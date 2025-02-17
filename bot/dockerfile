@@ -1,0 +1,33 @@
+# Use the official Go image as the base
+FROM golang:1.24.0 as builder
+
+# Set the working directory
+WORKDIR /korotole.com
+
+# Copy and download dependencies
+COPY go.mod go.sum ./  
+RUN go mod download
+
+# Copy the rest of the application code
+COPY . .
+
+# Build the application
+RUN go build -o bin-bot main.go
+
+# Use a minimal image for the final container
+FROM debian:bookworm-slim
+
+# Install CA certificates
+RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
+
+# Set the working directory in the container
+WORKDIR /korotole.com/bot
+
+# Copy built binary from the builder
+COPY --from=builder /korotole.com/bin-bot /korotole.com/bin-bot
+
+# Expose the application's port
+EXPOSE 8081
+
+# Run the bot service
+CMD ["/korotole.com/bin-bot"]

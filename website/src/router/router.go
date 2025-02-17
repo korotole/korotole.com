@@ -88,7 +88,7 @@ func notifyTelegramBot(ipAddress string) {
 	}
 
 	// Send a POST request to the Telegram bot microservice
-	resp, err := http.Post("MICROSERVICE-ADDRESS-HERE", "application/json", bytes.NewBuffer(payload))
+	resp, err := http.Post("http://bot:8081/notify-ip", "application/json", bytes.NewBuffer(payload))
 	if err != nil {
 		log.Printf("Error sending IP to Telegram bot: %v\n", err)
 		return
