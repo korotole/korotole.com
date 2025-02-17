@@ -1,0 +1,17 @@
+{{define "Header"}}
+<div class="profile-container">
+    <picture>
+      <!-- Dark mode image -->
+      <source srcset="/static/assets/favs/fav-light.png" media="(prefers-color-scheme: dark)">
+      <!-- Default (light mode) image -->
+      <img src="/static/assets/favs/fav-dark.png" alt="avatar" class="profile-photo">
+    </picture>
+    <div class="text-container">
+        <h1 class="main-header">Oleksandr Korotetskyi</h1>
+        <p>&nbsp;Software developer, AI & ML enthusiast – 
+            <a href="https://chatgpt.com/share/67ac9d99-90b8-8000-8644-5317bb347381" target="_blank" rel="noopener noreferrer">about me</a>, 
+            <a href="/cv">résumé</a>.
+        </p>
+    </div>
+</div>
+{{end}}

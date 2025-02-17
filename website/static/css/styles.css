@@ -1,0 +1,400 @@
+/* Reset CSS */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    background: #f4f1e9; /* Paper-like color for light mode */
+    color: #000;
+    font: 0.9em/1.4em Helvetica, Arial, sans-serif;
+    -webkit-font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    -moz-font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    min-height: 100%;
+    min-width: 320px;
+    font-weight: 200;
+}
+
+/* Original link styles - updated */
+a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 2px solid currentColor;
+    opacity: 1;
+    transition: border-opacity 0.2s;
+}
+
+a:hover {
+    border-bottom-color: currentColor;
+}
+
+h1 {
+    font-size: 2em;
+    font-weight: 900;
+    line-height: 110%;
+}
+
+h2 {
+    font-size: 1.2em;
+    line-height: 1.4em;
+    margin-bottom: 0.3em;
+}
+
+h3 {
+    font-size: 1.2em;
+    margin-top: 1.4em;
+    line-height: 2em;
+    font-weight: 900;
+}
+
+p {
+    margin-bottom: 0.4em;
+}
+
+strong {
+    font-weight: bold;
+}
+
+.b-page {
+    max-width: 550px;
+    margin: 25px auto;
+    padding: 0 15px;
+    padding-bottom: 10px; /*!*/
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
+}
+
+.cssanimation, .cssanimation span {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+
+.cssanimation span {
+    display: inline-block;
+}
+
+.leFlyInBottom span {
+    animation-name: leFlyInBottom;
+}
+
+@keyframes leFlyInBottom {
+    0% {
+        transform: translate(0px, 80px);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(10px, -50px);
+        animation-timing-function: ease-in-out;
+    }
+}
+
+/* Glitch effect */
+.glitch {
+    position: relative;
+    display: inline-block;
+    line-height: 1.4; /* Add explicit line height */
+}
+
+.glitch.single-line {
+    white-space: nowrap; /* Prevent wrapping */
+    height: 1.4em; /* Match line height */
+    overflow: hidden; /* Contain the effect */
+}
+
+.glitch::after, .glitch::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: attr(data-text);
+    clip: rect(0, 900px, 0, 0);
+    display: block; /* Ensure block display */
+    line-height: inherit; /* Inherit line height */
+}
+
+.glitch::after {
+    animation: glitch-anim 8s infinite linear alternate-reverse;
+    left: 1px;
+    text-shadow: 1px 0 red;
+}
+
+.glitch::before {
+    animation: glitch-anim-2 12s infinite linear alternate-reverse;
+    left: -1px;
+    text-shadow: -1px 0 limegreen;
+}
+
+@keyframes glitch-anim {
+    0% { clip: rect(3px, 9999px, 93px, 0); }
+    5% { clip: rect(53px, 9999px, 78px, 0); }
+    10% { clip: rect(10px, 9999px, 75px, 0); }
+    15% { clip: rect(32px, 9999px, 40px, 0); }
+    20% { clip: rect(65px, 9999px, 62px, 0); }
+    25% { clip: rect(31px, 9999px, 14px, 0); }
+    30% { clip: rect(94px, 9999px, 87px, 0); }
+    35% { clip: rect(81px, 9999px, 41px, 0); }
+    40% { clip: rect(45px, 9999px, 50px, 0); }
+    45% { clip: rect(82px, 9999px, 41px, 0); }
+    50% { clip: rect(71px, 9999px, 3px, 0); }
+    55% { clip: rect(75px, 9999px, 60px, 0); }
+    60% { clip: rect(20px, 9999px, 49px, 0); }
+    65% { clip: rect(67px, 9999px, 92px, 0); }
+    70% { clip: rect(47px, 9999px, 55px, 0); }
+    75% { clip: rect(63px, 9999px, 90px, 0); }
+    80% { clip: rect(70px, 9999px, 92px, 0); }
+    85% { clip: rect(41px, 9999px, 60px, 0); }
+    90% { clip: rect(56px, 9999px, 79px, 0); }
+    95% { clip: rect(21px, 9999px, 68px, 0); }
+    100% { clip: rect(15px, 9999px, 72px, 0); }
+}
+
+@keyframes glitch-anim-2 {
+    0% { clip: rect(65px, 9999px, 99px, 0); }
+    5% { clip: rect(86px, 9999px, 70px, 0); }
+    10% { clip: rect(79px, 9999px, 60px, 0); }
+    15% { clip: rect(15px, 9999px, 88px, 0); }
+    20% { clip: rect(24px, 9999px, 5px, 0); }
+    25% { clip: rect(35px, 9999px, 3px, 0); }
+    30% { clip: rect(56px, 9999px, 11px, 0); }
+    35% { clip: rect(2px, 9999px, 38px, 0); }
+    40% { clip: rect(60px, 9999px, 50px, 0); }
+    45% { clip: rect(27px, 9999px, 4px, 0); }
+    50% { clip: rect(79px, 9999px, 12px, 0); }
+    55% { clip: rect(23px, 9999px, 8px, 0); }
+    60% { clip: rect(65px, 9999px, 55px, 0); }
+    65% { clip: rect(19px, 9999px, 7px, 0); }
+    70% { clip: rect(43px, 9999px, 17px, 0); }
+    75% { clip: rect(65px, 9999px, 91px, 0); }
+    80% { clip: rect(45px, 9999px, 66px, 0); }
+    85% { clip: rect(3px, 9999px, 2px, 0); }
+    90% { clip: rect(58px, 9999px, 81px, 0); }
+    95% { clip: rect(29px, 9999px, 20px, 0); }
+    100% { clip: rect(82px, 9999px, 28px, 0); }
+}
+
+/* Chat Display Styles */
+.chat-display {
+    width: 100%;
+    height: 0; /* Start collapsed */
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+    padding: 0; /* Start with no padding */
+    border: 0; /* Start with no border */
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    transition: all 0.3s ease-in-out;
+    margin: 0; /* Ensure no margin */
+    visibility: hidden; /* Hide when collapsed */
+}
+
+.chat-display.expanded {
+    height: 300px; /* Expand to full height */
+    padding: 10px; /* Add padding when expanded */
+    border: 1px solid #ccc; /* Add border when expanded */
+    visibility: visible; /* Show when expanded */
+}
+
+/* User Message Styles */
+.message.user {
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.message.user .message-text {
+    display: inline-block;
+    background-color: #007AFF; /* iMessage blue */
+    color: white;
+    padding: 8px 12px;
+    border-radius: 18px;
+    border-bottom-right-radius: 4px;
+    max-width: 70%;
+}
+
+/* Bot Message Styles */
+.message.bot {
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.message.bot .message-text {
+    display: inline-block;
+    background-color: #E9E9EB; /* iMessage gray */
+    color: black;
+    padding: 8px 12px;
+    border-radius: 18px;
+    border-bottom-left-radius: 4px;
+    max-width: 70%;
+}
+
+/* Typing Indicator Styles */
+.message.bot.typing .message-text {
+    font-style: italic;
+    color: gray;
+}
+
+.chat-form {
+    margin: 25px auto;
+    padding: 0 10px;
+    width: 100%;
+}
+
+.chat-form input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px; /* Prevent zoom on focus */
+    font-family: inherit;
+    margin-bottom: 10px;
+}
+
+.chat-form input[type="button"] {
+    width: 100%;
+    padding: 15px 25px;
+    font-size: 1.1em;
+    font-family: inherit;
+    cursor: pointer;
+    margin-bottom: 10px;
+    background-color: #fff;
+    border: 2px solid #000;
+    border-radius: 5px;
+    /* Remove default iOS button styles */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.chat-form input[type="button"]:hover {
+    background-color: #f0f0f0;
+}
+
+/* Prevent horizontal scroll on mobile */
+body, html {
+    overflow-x: hidden;
+}
+
+/* Add this new style */
+.attribution {
+    text-align: right;
+    font-size: small;
+    margin-top: -10px;
+    position: relative;
+    top: -2px;
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Hide attribution when chat is expanded */
+.chat-display.expanded + br + .attribution {
+    opacity: 0;
+}
+
+.footer {
+    height: 16px; /* Reduced from 20px */
+    position: fixed;
+    bottom: 0;
+    left: 50%; /* Center the footer */
+    transform: translateX(-50%); /* Offset by half its width to truly center */
+    width: 100%;
+    max-width: 550px; /* Match the max-width of .b-page */
+    text-align: center;
+    padding: 0 15px; /* Match the padding of .b-page */
+    line-height: 16px; /* Match the height */
+    overflow: hidden; /* Prevent text overflow */
+    margin: 0;
+    vertical-align: middle; /* Center text vertically */
+    background: #f4f1e9; /* Paper-like color for light mode */
+    color: #000;
+}
+
+.main-header
+{
+    font-family: 'Arial Black', 'Helvetica', sans-serif; /* Bold & strong fonts */
+    font-weight: 900;  /* Maximum boldness */
+    font-size: 36px;  /* Adjust size as needed */
+    text-align: left;  /* Align to left */
+}
+
+.emoji-btn {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Keep normal text color */
+    border-bottom: none;
+}
+
+.emoji-btn:hover {
+    text-decoration: none; /* Ensure it stays removed on hover */
+    border-bottom: none;
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+    body, .footer, .topper {
+        background: #1a1a1a;
+        color: #e0e0e0;
+    }
+
+    a {
+        color: inherit !important; /* Force override */
+        border-bottom: 2px solid currentColor;
+    }
+
+    .chat-display {
+        background-color: #2d2d2d;
+    }
+
+    .message.bot .message-text {
+        background-color: #3d3d3d;
+        color: #e0e0e0;
+    }
+
+    .chat-form input[type="text"],
+    .chat-form input[type="button"] {
+        background-color: #2d2d2d;
+        color: #e0e0e0;
+        border-color: #e0e0e0;
+    }
+
+    .chat-form input[type="button"]:hover {
+        background-color: #3d3d3d;
+    }
+}
+
+/* Just keep the mobile-specific adjustments */
+@media (hover: none) {
+    a {
+        border-bottom: 2px solid currentColor;
+        opacity: 0.6; /* Make underline more visible on touch devices */
+    }
+}
+
+.profile-container {
+    display: flex !important;
+    align-items: center;
+    gap: 15px; /* Adjust spacing between image and text */
+}
+
+.profile-photo {
+    width: 56px; /* Adjust as needed */
+    height: 56px;
+    object-fit: cover;
+}
+
+.text-container {
+    display: flex;
+    flex-direction: column;
+}
