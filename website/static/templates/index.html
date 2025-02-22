@@ -3,13 +3,7 @@
 
 <head>
   <title>korotole | main</title>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="/static/css/styles.css">
-  <!-- icon -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/static/assets/favs/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/static/assets/favs/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/static/assets/favs/favicon-16x16.png">
-  <link rel="manifest" href="/static/assets/favs/site.webmanifest">
+  {{template "Metadata"}}
 </head>
 
 <body>
@@ -18,12 +12,67 @@
     {{template "Header"}}
 
     <h3>Contacts & Media:</h3>
-    <p>
+
+    <p class="row-buttons">
+      <!-- Download Button -->
+      <a style="border-bottom: none;" href="https://t.me/korotole">
+      <button class="row-btn">
+        <picture>
+          <source srcset="/static/assets/icons/telegram.svg" media="(prefers-color-scheme: dark)">
+          <img src="/static/assets/icons/telegram.svg" alt="telegram" class="icon-big">
+        </picture>
+        <span>Telegram</span>
+      </button>
+      </a>
+    
+      <a style="border-bottom: none;" href="https://www.instagram.com/korotole/">
+        <button class="row-btn">
+          <picture>
+            <source srcset="/static/assets/icons/instagram.svg" media="(prefers-color-scheme: dark)">
+            <img src="/static/assets/icons/instagram.svg" alt="instagram" class="icon-big">
+          </picture>
+          <span>Instagram</span>
+        </button>
+      </a>
+
+      <a style="border-bottom: none;" href="https://www.linkedin.com/in/oleksandr-korotetskyi-57a8b9143/">
+        <button class="row-btn">
+          <picture>
+            <source srcset="/static/assets/icons/linkedin.svg" media="(prefers-color-scheme: dark)">
+            <img src="/static/assets/icons/linkedin.svg" alt="linkedin" class="icon-big">
+          </picture>
+          <span>LinkedIn</span>
+        </button>
+      </a>
+
+      <a style="border-bottom: none;" href="https://github.com/korotole">
+        <button class="row-btn">
+          <picture>
+            <source srcset="/static/assets/icons/github-light.svg" media="(prefers-color-scheme: dark)">
+            <img src="/static/assets/icons/github-dark.svg" alt="github" class="icon-big">
+          </picture>
+          <span>GitHub</span>
+        </button>
+      </a>
+
+      <a style="border-bottom: none;" href="https://x.com/korotole_">
+        <button class="row-btn">
+          <picture>
+            <source srcset="/static/assets/icons/x-light.svg" media="(prefers-color-scheme: dark)">
+            <img src="/static/assets/icons/x-dark.svg" alt="x" class="icon-big">
+          </picture>
+          <span>Twitter/X</span>
+        </button>
+      </a>
+
+    </p>
+
+    <!-- <p>
       <a href="https://t.me/korotole">telegram</a>&nbsp;
       <a href="https://www.instagram.com/korotole/">instagram</a>&nbsp;
       <a href="https://www.linkedin.com/in/oleksandr-korotetskyi-57a8b9143/">linkedin</a>&nbsp;
       <a href="https://github.com/korotole">github</a>&nbsp;
-    </p>
+    </p> -->
     <p>
       <strong><a href="mailto:korotole@icloud.com">korotole@icloud.com</a></strong>
     </p>

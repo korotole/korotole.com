@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"os"
 	"strings"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
@@ -55,13 +56,13 @@ var (
 func init() {
 	// Initialize the Telegram bot
 	var err error
-	telegramBot, err = tgbotapi.NewBotAPI("TOKEN")
+	telegramBot, err = tgbotapi.NewBotAPI(os.Getenv("TG_API_KEY"))
 	if err != nil {
 		log.Fatal("Failed to initialize Telegram bot: ", err)
 	}
 
 	// Set the Telegram chat ID (this can be found through bot interaction)
-	telegramChatID = 314159
+	telegramChatID = 448580548
 }
 
 func notifyAdmin(message string) {
@@ -123,6 +124,6 @@ func main() {
 	http.HandleFunc("/notify-ip", ipConnectionHandler)
 
 	// Start the server
-	log.Println("Telegram bot microservice running at :8081")
-	log.Fatal(http.ListenAndServe(":8081", nil))
+	log.Println("Telegram bot microservice running at" + os.Getenv("TG_LISTEN_ADDR"))
+	log.Fatal(http.ListenAndServe(os.Getenv("TG_LISTEN_ADDR"), nil))
 }

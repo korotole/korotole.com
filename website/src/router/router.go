@@ -22,18 +22,31 @@ type SessionConfig struct {
 }
 
 var (
-	err    error
-	rdb    *web_rdb.Redis
-	tpl    *template.Template
+	err error
+	rdb *web_rdb.Redis
+	tpl *template.Template
+
+	// Parse the session expiration time from environment variable
 	ssnCfg = SessionConfig{
 		Name:     "session-id",
 		HttpOnly: true,
-		MaxAge:   15, // 1/2 hour
+		MaxAge: func() int {
+			expireStr := os.Getenv("WS_SSN_EXPIRE")
+			expireInt, err := strconv.ParseInt(expireStr, 10, 64)
+			if err != nil {
+				// Default to 3600 seconds (1 hour) if there's an error
+				return 3600
+			}
+			return int(expireInt)
+		}(),
 	}
 
-	// visitor/Redis
+	// Visitor/Redis
 	visitorCountKey string = "visitor-count"
-	visitors        int64  = 0
+	visitors        int64  = 0 // TODO: get actual number from beginning?????
+
+	// TG bot
+	botAddr = "http://bot" + os.Getenv("TG_LISTEN_ADDR") + "/notify-ip"
 )
 
 func InitRouter(database *web_rdb.Redis) {
@@ -49,6 +62,7 @@ func InitRouter(database *web_rdb.Redis) {
 	http.HandleFunc("/", indexHandler)
 	http.HandleFunc("/cv", cvHandler)
 	http.HandleFunc("/login", loginHandler)
+	http.HandleFunc("/donate", donateHandler)
 }
 
 func Run(ListenAddr string) {
@@ -58,7 +72,8 @@ func Run(ListenAddr string) {
 
 func establishSession(w *http.ResponseWriter, r *http.Request) {
 	// DUMMY HASH GEN
-	hash := string(web_utl.GetSHA256(r.RemoteAddr + strconv.FormatInt(web_utl.GetTimestamp(), 10)))
+	timestamp := strconv.FormatInt(web_utl.GetTimestamp(), 10)
+	hash := string(web_utl.GetSHA256(r.RemoteAddr + timestamp))
 	cookie := &http.Cookie{
 		Name:     ssnCfg.Name,
 		Value:    hash,
@@ -88,7 +103,7 @@ func notifyTelegramBot(ipAddress string) {
 	}
 
 	// Send a POST request to the Telegram bot microservice
-	resp, err := http.Post("http://bot:8081/notify-ip", "application/json", bytes.NewBuffer(payload))
+	resp, err := http.Post(botAddr, "application/json", bytes.NewBuffer(payload))
 	if err != nil {
 		log.Printf("Error sending IP to Telegram bot: %v\n", err)
 		return
@@ -106,9 +121,15 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		establishSession(&w, r)
 		// Notify the Telegram bot microservice about the new connection
-		notifyTelegramBot(r.RemoteAddr)
+		go notifyTelegramBot(r.RemoteAddr)
+		// store the data via database microservice
+		// go updateDatabase()
 	}
 	tpl.ExecuteTemplate(w, "index.html", visitors)
+}
+
+func donateHandler(w http.ResponseWriter, r *http.Request) {
+	tpl.ExecuteTemplate(w, "donate.html", visitors)
 }
 
 func loginHandler(w http.ResponseWriter, r *http.Request) {

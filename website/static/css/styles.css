@@ -7,7 +7,7 @@
 
 body {
     width: 100%;
-    background: #f4f1e9; /* Paper-like color for light mode */
+    background: #fff; /* Paper-like color for light mode */
     color: #000;
     font: 0.9em/1.4em Helvetica, Arial, sans-serif;
     -webkit-font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
@@ -189,7 +189,7 @@ strong {
     height: 0; /* Start collapsed */
     max-height: 300px;
     overflow-y: auto;
-    background-color: #f9f9f9;
+    background-color: #fff;
     padding: 0; /* Start with no padding */
     border: 0; /* Start with no border */
     border-radius: 5px;
@@ -318,7 +318,7 @@ body, html {
     overflow: hidden; /* Prevent text overflow */
     margin: 0;
     vertical-align: middle; /* Center text vertically */
-    background: #f4f1e9; /* Paper-like color for light mode */
+    background: #fff; /* Paper-like color for light mode */
     color: #000;
 }
 
@@ -341,11 +341,122 @@ body, html {
     border-bottom: none;
 }
 
+.profile-container {
+    display: flex !important;
+    align-items: center;
+    gap: 15px; /* Adjust spacing between image and text */
+}
+
+.profile-photo {
+    width: 62px; /* Adjust as needed */
+    height: 62px;
+    object-fit: cover;
+}
+
+.text-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.wallet-container {
+    /* font-size: 18px;  Decrease font size */
+    /* font-weight: bold; */
+    margin-bottom: none; /* Reduce bottom margin */
+    display: flex !important;
+    align-items: center;
+    gap: 15px; /* Adjust spacing between image and text */
+
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    background: #f9f9f9;
+    border: 1px solid #e1e4e8; /* Light gray border */
+    overflow-x: auto;           /* Horizontal scroll if needed */
+}
+
+.wallet-item-header {
+    font-size: 18px;  /* Decrease font size */
+    font-weight: bold;
+}
+
+.wallet-item-address {
+    line-height: 1.55;  /* Increase space between lines */
+    font-size: 15px;
+    /* background-color:#EEEEEE; */
+    font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New;
+    display: flex;
+    flex-direction: column;
+}
+
+.wallet-qr {
+    width: 86px; /* Adjust as needed */
+    height: 86px;
+    border-radius: 5px;
+    object-fit: cover;
+    cursor: pointer; /* Indicate it's clickable */
+}
+
+.wallet-network {
+    font-size: 14px;
+    white-space: nowrap; /* Prevent line break */
+    display: flex; /* Keep items on the same line */
+    align-items: center; /* Align vertically */
+    gap: 4px; /* Small space between label and description */
+  }
+  
+  /* Bold Label with Header Font */
+  .network-label {
+    font-weight: bold;
+    font-size: 14px;
+    flex-shrink: 0; /* Prevents the label from shrinking */
+    margin-right: 5px;
+  }
+
+/* Enlarge-QR Overlay */
+#image-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8); /* Dim the background */
+    display: none;                       /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;                       /* On top of everything */
+  }
+  
+  /* The enlarged QR code image */
+#image-overlay img {
+    max-width: 75%;
+    max-height: 75%;
+    margin: auto;
+    display: block;
+    border-radius: 8px; /* Optional rounding */
+}
+
 /* Dark mode styles */
 @media (prefers-color-scheme: dark) {
     body, .footer, .topper {
         background: #1a1a1a;
-        color: #e0e0e0;
+        color: #fff;
+    }
+
+    #image-overlay {
+        background-color: rgba(0, 0, 0, 0.8); /* Dim the background */
+    }
+
+    .wallet-container {
+        background: #212121;
+        border: 1px solid #4a4a4a;  /* Light gray border */
     }
 
     a {
@@ -359,14 +470,14 @@ body, html {
 
     .message.bot .message-text {
         background-color: #3d3d3d;
-        color: #e0e0e0;
+        color: #fff;
     }
 
     .chat-form input[type="text"],
     .chat-form input[type="button"] {
         background-color: #2d2d2d;
-        color: #e0e0e0;
-        border-color: #e0e0e0;
+        color: #fff;
+        border-color: #fff;
     }
 
     .chat-form input[type="button"]:hover {
@@ -382,19 +493,91 @@ body, html {
     }
 }
 
-.profile-container {
-    display: flex !important;
-    align-items: center;
-    gap: 15px; /* Adjust spacing between image and text */
+/* Wrap your two buttons in a container if you like extra spacing */
+  .wallet-actions {
+    display: inline-flex; 
+    gap: 10px; /* space between buttons */
+    justify-content: flex-end;
+  }
+  
+  /* Minimalistic button style */
+  .action-btn {
+    display: inline-flex;       /* so icon + text align nicely */
+    align-items: center;        /* vertical centering */
+    gap: 5px;                   /* small space between icon & text */
+    border: 1px solid #e0e0e0;     /* simple outline */
+    background-color: #fff;     /* white background */
+    color: #000;                /* black text */
+    padding: 3px 3px;          /* adjust as needed */
+    cursor: pointer;            /* indicate clickability */
+    border-radius: 4px;         /* subtle rounding */
+    font-size: 14px;            /* consistent font size */
+    font-family: inherit;       /* inherit parent font */
+    transition: background-color 0.2s ease;
+    text-decoration: none;      /* remove any default underline on <button> in some browsers */
+  }
+  
+  .row-btn {
+    display: inline-flex;       /* so icon + text align nicely */
+    align-items: center;        /* vertical centering */
+    gap: 5px;                   /* small space between icon & text */
+    border: 2px solid #e1e4e8;     /* simple outline */
+    background-color: #f9f9f9;     /* white background */
+    color: #000;                /* black text */
+    padding: 6px 6px;          /* adjust as needed */
+    cursor: pointer;            /* indicate clickability */
+    border-radius: 8px;         /* subtle rounding */
+    font-size: 14px;            /* consistent font size */
+    font-family: inherit;       /* inherit parent font */
+    transition: background-color 0.2s ease;
+    text-decoration: none;      /* remove any default underline on <button> in some browsers */
+  }
+
+  /* Hover effect */
+  .action-btn:hover, .row-btn:hover {
+    background-color: #f0f0f0;  /* light gray on hover */
+  }
+  
+  /* Active (click) effect */
+  .action-btn:active, .row-btn:active {
+    background-color: #e0e0e0;  /* darker gray on click */
+  }
+  
+  /* The icon class ensures consistent size & middle alignment */
+  .icon {
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;  /* extra insurance for inline images */
+  }
+
+  .icon-big {
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;  /* extra insurance for inline images */
+  }
+  
+.row-buttons {
+    display: inline-flex; 
+    gap: 10px;
 }
 
-.profile-photo {
-    width: 56px; /* Adjust as needed */
-    height: 56px;
-    object-fit: cover;
-}
+  /* Optional: Dark mode adjustments */
+  @media (prefers-color-scheme: dark) {
+    .action-btn {
+      background-color: #1a1a1a;
+      color: #fff;
+      border-color: #555;
+    }
+    .row-btn {
+        background-color: #212121;
+        color: #fff;
+        border-color: #555;
+    }
 
-.text-container {
-    display: flex;
-    flex-direction: column;
-}
+    .action-btn:hover, .row-btn:hover {
+      background-color: #444;
+    }
+    .action-btn:active, .row-btn:active {
+      background-color: #555;
+    }
+  }

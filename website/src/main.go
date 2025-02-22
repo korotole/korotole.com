@@ -2,14 +2,15 @@ package main
 
 import (
 	"log"
+	"os"
 
 	web_rdb "website/redis"
 	web_rtr "website/router"
 )
 
-const (
-	ListenAddr = ""
-	RedisAddr  = ""
+var (
+	ListenAddr = os.Getenv("WS_LISTEN_ADDR")
+	RedisAddr  = os.Getenv("WS_REDIS_ADDR")
 )
 
 func main() {

@@ -4,33 +4,39 @@ services:
       context: ./website
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "${WEBSITE_PORT}:8080"
     depends_on:
       - redis
     networks:
       - korotole_network
     restart: unless-stopped
+    env_file:
+      - .env
 
   bot:
     build:
       context: ./bot
       dockerfile: Dockerfile
     ports:
-      - "8081:8081"
+      - "${BOT_PORT}:8081"
     networks:
       - korotole_network
     restart: unless-stopped
+    env_file:
+      - .env
 
   redis:
     image: redis:7.2-alpine
     container_name: redis
     restart: unless-stopped
     ports:
-      - "6379:6379"
+      - "${REDIS_PORT}:6379"
     networks:
       - korotole_network
     volumes:
       - redis_data:/data
+    env_file:
+      - .env
 
 volumes:
   redis_data:
