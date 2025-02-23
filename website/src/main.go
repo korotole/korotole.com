@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"runtime"
 
 	web_rdb "website/redis"
 	web_rtr "website/router"
@@ -14,6 +15,8 @@ var (
 )
 
 func main() {
+	log.Println("Numer of CPUs: ", runtime.NumCPU()/2)
+	runtime.GOMAXPROCS(runtime.NumCPU() / 2)
 
 	db, err := web_rdb.InitRedis(RedisAddr)
 	if err != nil {

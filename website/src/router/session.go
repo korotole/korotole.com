@@ -42,20 +42,20 @@ func SessionControl(HandlerFunc http.HandlerFunc) http.HandlerFunc {
 		_, err := r.Cookie("session-id")
 		// log.Println("cookie:", cookie, "err:", err)
 		if err != nil {
-			establishSession(&w, r)
+			ssnId, tmStmp := establishSession(&w, r)
 			// Notify the Telegram bot microservice about the new connection
 			go notifyTelegramBot(r.RemoteAddr)
 			// store the data via database microservice
-			// go updateDatabase()
+			go updateDatabase(ssnId, r.RemoteAddr, tmStmp)
 		}
 		HandlerFunc.ServeHTTP(w, r)
 	}
 }
 
-func establishSession(w *http.ResponseWriter, r *http.Request) {
+func establishSession(w *http.ResponseWriter, r *http.Request) (string, string) {
 	// DUMMY HASH GEN
 	timestamp := strconv.FormatInt(web_utl.GetTimestamp(), 10)
-	hash := string(web_utl.GetSHA256(r.RemoteAddr + timestamp))
+	hash := string(web_utl.GetSHA256(r.RemoteAddr + timestamp)) // session-id
 	cookie := &http.Cookie{
 		Name:     ssnCfg.Name,
 		Value:    hash,
@@ -71,6 +71,8 @@ func establishSession(w *http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println("Error: ", err)
 	}
+
+	return hash, timestamp
 }
 
 func notifyTelegramBot(ipAddress string) {
@@ -95,4 +97,8 @@ func notifyTelegramBot(ipAddress string) {
 	if resp.StatusCode != http.StatusOK {
 		log.Printf("Telegram bot microservice returned an error: %v\n", resp.Status)
 	}
+}
+
+func updateDatabase(ssnId string, IP string, tmStmp string) {
+
 }
