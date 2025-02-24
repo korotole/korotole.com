@@ -115,8 +115,13 @@ body, html {
 {
     font-family: 'Arial Black', 'Helvetica', sans-serif; /* Bold & strong fonts */
     font-weight: 900;  /* Maximum boldness */
-    font-size: 36px;  /* Adjust size as needed */
+    font-size: 32px;  /* Adjust size as needed */
     text-align: left;  /* Align to left */
+}
+
+.header-text
+{
+    margin-left: 2px;
 }
 
 .profile-container {
@@ -135,6 +140,114 @@ body, html {
     display: flex;
     flex-direction: column;
     width: 100%;
+}
+
+
+.mobile-name-container {
+    width: 100%;
+    display: block;
+}
+.desktop-only {
+    display: none;
+}
+/* Desktop and larger screens (586px and up) */
+@media only screen and (min-width: 586px) {
+    .profile-container {
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .mobile-name-container {
+        display: none;
+    }
+    
+    .desktop-only {
+        display: block;
+    }
+    
+    .text-container {
+        flex-direction: column;
+    }
+}
+
+/* Tablet range (470px - 585px) */
+@media only screen and (max-width: 585px) and (min-width: 470px) {
+    .profile-container {
+        flex-direction: row;
+        align-items: center;
+    }
+    
+    .mobile-name-container {
+        display: none;
+    }
+    
+    .desktop-only {
+        display: block;
+    }
+    
+    .text-container {
+        flex-direction: column;
+    }
+
+    .main-header {
+        font-size: 28px; /* Default for 532-585px */
+    }
+}
+
+@media only screen and (max-width: 531px) and (min-width: 504px) {
+    .main-header {
+        font-size: 26px;
+    }
+}
+
+@media only screen and (max-width: 503px) and (min-width: 470px) {
+    .main-header {
+        font-size: 23px;
+    }
+}
+
+/* Mobile (469px and below) */
+@media only screen and (max-width: 469px) {
+    .profile-container {
+        flex-wrap: wrap;
+    }
+    
+    .profile-photo {
+        width: 56px;
+        height: 56px;
+    }
+    
+    .profile-container > picture,
+    .profile-container > .text-container {
+        display: inline-flex;
+    }
+    
+    .profile-container > .text-container {
+        width: calc(100% - 75px);
+    }
+    
+    .main-header {
+        font-size: 26px; /* Default for 440-469px */
+    }
+}
+
+/* Smaller mobile adjustments */
+@media only screen and (max-width: 440px) {
+    .main-header {
+        font-size: 24px;
+    }
+}
+
+@media only screen and (max-width: 420px) {
+    .main-header {
+        font-size: 23px;
+    }
+}
+
+@media only screen and (max-width: 389px) {
+    .main-header {
+        font-size: 22px;
+    }
 }
 
 .header-row {
