@@ -97,7 +97,7 @@ body, html {
     vertical-align: middle; /* Center text vertically */
     background: #fff; /* Paper-like color for light mode */
     color: #000;
-    padding-bottom: 1px; /*!*/
+    margin-bottom: 10px; /*!*/
 }
 
 .emoji-btn {
@@ -190,19 +190,19 @@ body, html {
     }
 
     .main-header {
-        font-size: 28px; /* Default for 532-585px */
+        font-size: 26px; /* Default for 532-585px */
     }
 }
 
 @media only screen and (max-width: 531px) and (min-width: 504px) {
     .main-header {
-        font-size: 26px;
+        font-size: 24px;
     }
 }
 
 @media only screen and (max-width: 503px) and (min-width: 470px) {
     .main-header {
-        font-size: 23px;
+        font-size: 22px;
     }
 }
 
@@ -227,26 +227,26 @@ body, html {
     }
     
     .main-header {
-        font-size: 26px; /* Default for 440-469px */
+        font-size: 22px; /* Default for 440-469px */
     }
 }
 
 /* Smaller mobile adjustments */
 @media only screen and (max-width: 440px) {
     .main-header {
-        font-size: 24px;
+        font-size: 22px;
     }
 }
 
 @media only screen and (max-width: 420px) {
     .main-header {
-        font-size: 23px;
+        font-size: 20px;
     }
 }
 
 @media only screen and (max-width: 389px) {
     .main-header {
-        font-size: 22px;
+        font-size: 19px;
     }
 }
 

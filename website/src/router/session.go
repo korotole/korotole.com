@@ -42,26 +42,29 @@ func SessionControl(HandlerFunc http.HandlerFunc) http.HandlerFunc {
 		_, err := r.Cookie("session-id")
 		// log.Println("cookie:", cookie, "err:", err)
 		if err != nil {
-			clientIP, ssnId, tmStmp := establishSession(&w, r)
+			clientIP, ssnId, tmStmp, usrAgnt := establishSession(&w, r)
 			// Notify the Telegram bot microservice about the new connection
 			go notifyTelegramBot(clientIP)
 			// store the data via database microservice
-			go updateDatabase(ssnId, clientIP, tmStmp)
+			go updateDatabase(ssnId, clientIP, tmStmp, usrAgnt)
 		}
 		HandlerFunc.ServeHTTP(w, r)
 	}
 }
 
-func establishSession(w *http.ResponseWriter, r *http.Request) (string, string, string) {
+func establishSession(w *http.ResponseWriter, r *http.Request) (string, string, string, string) {
 	// take dockerization & cloudflare deployment into account
+	userAgent := r.Header.Get("User-Agent")
 	clientIP := r.Header.Get("CF-Connecting-IP")
 	if clientIP == "" {
+		log.Println("Failed to get CF-Connecting-IP header")
 		clientIP = r.Header.Get("X-Forwarded-For")
 	}
 	if clientIP == "" {
+		log.Println("Failed to get X-Forwarded-For header")
 		clientIP = r.RemoteAddr
 	}
-	
+
 	// DUMMY HASH GEN
 	timestamp := strconv.FormatInt(web_utl.GetTimestamp(), 10)
 	hash := string(web_utl.GetSHA256(clientIP + timestamp)) // session-id
@@ -75,13 +78,15 @@ func establishSession(w *http.ResponseWriter, r *http.Request) (string, string, 
 	http.SetCookie(*w, cookie)
 	log.Println("Website accessed: ", clientIP)
 	log.Println("Session created: ", hash)
+	log.Println("Timestamp: ", timestamp)
+	log.Println("User-Agent: ", userAgent)
 
 	visitors, err = rdb.Client.Incr(web_rdb.Ctx, visitorCountKey).Result()
 	if err != nil {
 		log.Println("Error: ", err)
 	}
 
-	return clientIP, hash, timestamp
+	return clientIP, hash, timestamp, userAgent
 }
 
 func notifyTelegramBot(ipAddress string) {
@@ -108,6 +113,36 @@ func notifyTelegramBot(ipAddress string) {
 	}
 }
 
-func updateDatabase(ssnId string, IP string, tmStmp string) {
+func updateDatabase(ssnId string, IP string, tmStmp string, usrAgnt string) {
+	// Prepare the request payload for the db-service
+	requestData := map[string]string{
+		"session_id": ssnId,
+		"ip_address": IP,
+		"timestamp":  tmStmp,
+		"user_agent": usrAgnt, // You can replace this with the actual User-Agent if needed
+		"action":     "create",
+	}
 
+	payload, err := json.Marshal(requestData)
+	if err != nil {
+		log.Printf("Error marshaling request data for db-service: %v\n", err)
+		return
+	}
+
+	// Define the URL of the db-service
+	dbServiceURL := "http://db-service:8082/sessions"
+
+	// Send a POST request to the db-service
+	resp, err := http.Post(dbServiceURL, "application/json", bytes.NewBuffer(payload))
+	if err != nil {
+		log.Printf("Error sending data to db-service: %v\n", err)
+		return
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		log.Printf("db-service returned an error: %v\n", resp.Status)
+	} else {
+		log.Println("Session data successfully stored in the database via db-service")
+	}
 }

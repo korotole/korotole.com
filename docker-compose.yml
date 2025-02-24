@@ -24,6 +24,33 @@ services:
     restart: unless-stopped
     env_file:
       - .env
+ 
+  db-service:
+    build: 
+      context: ./db-service
+      dockerfile: dockerfile
+    ports:
+      - "8082:8082"
+    networks:
+      - korotole_network
+    restart: unless-stopped
+    env_file:
+      - .env
+      
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-db
+    restart: always
+    ports:
+      - "3306:3306"
+    networks:
+      - korotole_network
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=11
+    env_file:
+      - .env
 
   redis:
     image: redis:7.2-alpine
@@ -40,6 +67,7 @@ services:
 
 volumes:
   redis_data:
+  mysql_data:
 
 networks:
   korotole_network:

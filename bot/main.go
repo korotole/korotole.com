@@ -120,8 +120,52 @@ func ipConnectionHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Notification sent successfully"))
 }
 
+func healthCheck(w http.ResponseWriter, r *http.Request) {
+	// Prepare the health status response
+	status := "ok"
+	statusCode := http.StatusOK
+	botStatus := "initialized"
+
+	// Check if the Telegram bot is properly initialized
+	if telegramBot == nil {
+		status = "error"
+		botStatus = "not initialized"
+		statusCode = http.StatusInternalServerError
+	}
+
+	// Check required environment variables
+	tgApiKey := os.Getenv("TG_API_KEY")
+	tgListenAddr := os.Getenv("TG_LISTEN_ADDR")
+	if tgApiKey == "" || tgListenAddr == "" {
+		status = "error"
+		statusCode = http.StatusInternalServerError
+	}
+
+	// Check connection to Telegram:
+	// Send a "getMe" request to Telegram API
+	_, err := telegramBot.GetMe()
+	if err != nil {
+		status = "error"
+		botStatus = "unreachable"
+		statusCode = http.StatusInternalServerError
+	}
+
+	// Build the JSON response
+	healthResponse := map[string]interface{}{
+		"status":           status,
+		"telegram_bot":     botStatus,
+		"telegram_api_key": tgApiKey != "",
+		"listen_address":   tgListenAddr,
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(statusCode)
+	json.NewEncoder(w).Encode(healthResponse)
+}
+
 func main() {
 	http.HandleFunc("/notify-ip", ipConnectionHandler)
+	http.HandleFunc("/health", healthCheck)
 
 	// Start the server
 	log.Println("Telegram bot microservice running at" + os.Getenv("TG_LISTEN_ADDR"))
