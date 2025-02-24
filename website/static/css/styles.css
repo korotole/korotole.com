@@ -5,7 +5,7 @@
     box-sizing: border-box;
 }
 
-body {
+html, body {
     width: 100%;
     background: #fff; /* Paper-like color for light mode */
     color: #000;
@@ -71,7 +71,7 @@ strong {
 }
 
 @media only screen and (max-width: 600px) {
-    body, .footer {
+    html, body, .footer {
         padding: 10px;
     }
 }
@@ -97,7 +97,7 @@ body, html {
     vertical-align: middle; /* Center text vertically */
     background: #fff; /* Paper-like color for light mode */
     color: #000;
-    padding-bottom: 2px; /*!*/
+    padding-bottom: 1px; /*!*/
 }
 
 .emoji-btn {
@@ -173,6 +173,7 @@ body, html {
     display: flex;
     flex-direction: column;
     white-space: nowrap;
+    margin-top: 1px;
 }
 
 .wallet-qr {
@@ -186,13 +187,13 @@ body, html {
 .wallet-network {
     font-size: 14px;
     white-space: nowrap; /* Prevent line break */
-    display: flex; /* Keep items on the same line */
+    display: inline-flex; /* Keep items on the same line */
     align-items: center; /* Align vertically */
     gap: 4px; /* Small space between label and description */
   }
   
   /* Bold Label with Header Font */
-  .network-label {
+.network-label {
     font-weight: bold;
     font-size: 14px;
     flex-shrink: 0; /* Prevents the label from shrinking */
@@ -224,7 +225,7 @@ body, html {
 
 /* Dark mode styles */
 @media (prefers-color-scheme: dark) {
-    body, .footer, .topper {
+    html, body, .footer, .topper {
         background: #1a1a1a;
         color: #fff;
     }
@@ -255,8 +256,9 @@ body, html {
 /* Wrap your two buttons in a container if you like extra spacing */
   .wallet-actions {
     display: inline-flex; 
-    gap: 10px; /* space between buttons */
-    justify-content: flex-end;
+    gap: 8px; /* space between buttons */
+    justify-content: flex-start;
+    margin-right: 8px;
   }
   
   /* Minimalistic button style */

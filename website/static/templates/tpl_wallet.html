@@ -1,13 +1,5 @@
 {{define "Wallet-Actions"}}
-<p class="wallet-actions">
-    <!-- Copy Button -->
-    <button class="action-btn copy-btn">
-      <picture>
-        <source srcset="/static/assets/icons/copy-light.svg" media="(prefers-color-scheme: dark)">
-        <img src="/static/assets/icons/copy-dark.svg" alt="Copy Icon" class="icon">
-      </picture>
-      <!-- <span>Copy</span> -->
-    </button>
+<span class="wallet-actions">
     <!-- Download Button -->
     <button class="action-btn download-btn">
       <picture>
@@ -16,5 +8,13 @@
       </picture>
       <!-- <span>Download</span> -->
     </button>
-</p>
+    <!-- Copy Button -->
+    <button class="action-btn copy-btn">
+      <picture>
+        <source srcset="/static/assets/icons/copy-light.svg" media="(prefers-color-scheme: dark)">
+        <img src="/static/assets/icons/copy-dark.svg" alt="Copy Icon" class="icon">
+      </picture>
+      <!-- <span>Copy</span> -->
+    </button>
+</span>
 {{end}}
