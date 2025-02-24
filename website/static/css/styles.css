@@ -563,6 +563,7 @@ body, html {
 .row-buttons {
     display: inline-flex; 
     gap: 10px;
+    flex-wrap: wrap;
 }
 
   /* Optional: Dark mode adjustments */
