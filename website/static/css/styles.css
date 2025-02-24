@@ -65,11 +65,13 @@ strong {
     max-width: 550px;
     margin: 25px auto;
     padding: 0 15px;
-    padding-bottom: 10px; /*!*/
+    padding-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box; /* Include padding in width calculation */
 }
 
 @media only screen and (max-width: 600px) {
-    body {
+    body, .footer {
         padding: 10px;
     }
 }
@@ -320,14 +322,7 @@ body, html {
     vertical-align: middle; /* Center text vertically */
     background: #fff; /* Paper-like color for light mode */
     color: #000;
-}
-
-.main-header
-{
-    font-family: 'Arial Black', 'Helvetica', sans-serif; /* Bold & strong fonts */
-    font-weight: 900;  /* Maximum boldness */
-    font-size: 36px;  /* Adjust size as needed */
-    text-align: left;  /* Align to left */
+    padding-bottom: 2px; /*!*/
 }
 
 .emoji-btn {
@@ -339,6 +334,14 @@ body, html {
 .emoji-btn:hover {
     text-decoration: none; /* Ensure it stays removed on hover */
     border-bottom: none;
+}
+
+.main-header
+{
+    font-family: 'Arial Black', 'Helvetica', sans-serif; /* Bold & strong fonts */
+    font-weight: 900;  /* Maximum boldness */
+    font-size: 36px;  /* Adjust size as needed */
+    text-align: left;  /* Align to left */
 }
 
 .profile-container {
@@ -372,7 +375,7 @@ body, html {
     margin-bottom: none; /* Reduce bottom margin */
     display: flex !important;
     align-items: center;
-    gap: 15px; /* Adjust spacing between image and text */
+    gap: 10px; /* Adjust spacing between image and text */
 
     margin-bottom: 20px;
     padding: 10px;
