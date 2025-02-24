@@ -397,6 +397,7 @@ body, html {
     font-family:Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New;
     display: flex;
     flex-direction: column;
+    white-space: nowrap;
 }
 
 .wallet-qr {
