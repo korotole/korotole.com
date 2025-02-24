@@ -42,20 +42,29 @@ func SessionControl(HandlerFunc http.HandlerFunc) http.HandlerFunc {
 		_, err := r.Cookie("session-id")
 		// log.Println("cookie:", cookie, "err:", err)
 		if err != nil {
-			ssnId, tmStmp := establishSession(&w, r)
+			clientIP, ssnId, tmStmp := establishSession(&w, r)
 			// Notify the Telegram bot microservice about the new connection
-			go notifyTelegramBot(r.RemoteAddr)
+			go notifyTelegramBot(clientIP)
 			// store the data via database microservice
-			go updateDatabase(ssnId, r.RemoteAddr, tmStmp)
+			go updateDatabase(ssnId, clientIP, tmStmp)
 		}
 		HandlerFunc.ServeHTTP(w, r)
 	}
 }
 
-func establishSession(w *http.ResponseWriter, r *http.Request) (string, string) {
+func establishSession(w *http.ResponseWriter, r *http.Request) (string, string, string) {
+	// take dockerization & cloudflare deployment into account
+	clientIP := r.Header.Get("CF-Connecting-IP")
+	if clientIP == "" {
+		clientIP = r.Header.Get("X-Forwarded-For")
+	}
+	if clientIP == "" {
+		clientIP = r.RemoteAddr
+	}
+	
 	// DUMMY HASH GEN
 	timestamp := strconv.FormatInt(web_utl.GetTimestamp(), 10)
-	hash := string(web_utl.GetSHA256(r.RemoteAddr + timestamp)) // session-id
+	hash := string(web_utl.GetSHA256(clientIP + timestamp)) // session-id
 	cookie := &http.Cookie{
 		Name:     ssnCfg.Name,
 		Value:    hash,
@@ -64,7 +73,7 @@ func establishSession(w *http.ResponseWriter, r *http.Request) (string, string) 
 	}
 
 	http.SetCookie(*w, cookie)
-	log.Println("Website accessed: ", r.RemoteAddr)
+	log.Println("Website accessed: ", clientIP)
 	log.Println("Session created: ", hash)
 
 	visitors, err = rdb.Client.Incr(web_rdb.Ctx, visitorCountKey).Result()
@@ -72,7 +81,7 @@ func establishSession(w *http.ResponseWriter, r *http.Request) (string, string) 
 		log.Println("Error: ", err)
 	}
 
-	return hash, timestamp
+	return clientIP, hash, timestamp
 }
 
 func notifyTelegramBot(ipAddress string) {
