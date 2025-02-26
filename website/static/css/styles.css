@@ -82,7 +82,7 @@ body, html {
 }
 
 .footer {
-    height: 16px; /* Reduced from 20px */
+    /* height: 40px; Reduced from 20px */
     position: fixed;
     bottom: 0;
     left: 50%; /* Center the footer */
@@ -97,7 +97,12 @@ body, html {
     vertical-align: middle; /* Center text vertically */
     background: #fff; /* Paper-like color for light mode */
     color: #000;
-    margin-bottom: 10px; /*!*/
+    padding-top: 10px;
+}
+
+.copyright {
+    font-size: smaller;
+    color: #555;
 }
 
 .emoji-btn {
@@ -167,6 +172,13 @@ body, html {
     
     .text-container {
         flex-direction: column;
+    }
+    .main-header {
+        font-size: 30px;
+    }
+    .profile-photo {
+        width: 64px;
+        height: 64px;
     }
 }
 
