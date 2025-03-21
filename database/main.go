@@ -55,29 +55,17 @@ func main() {
 }
 
 func initDB() error {
-	// Get database connection details from environment variables
-	dbUser := os.Getenv("DB_USER")
-	// dbPass := os.Getenv("DB_PASS")
-	dbHost := os.Getenv("DB_HOST")
-	dbPort := os.Getenv("DB_PORT")
-	dbName := os.Getenv("DB_NAME")
-
-	if dbUser == "" {
-		dbUser = "root"
-	}
-	if dbHost == "" {
-		dbHost = "mysql" // Docker service name
-	}
-	if dbPort == "" {
-		dbPort = "3306"
-	}
-	if dbName == "" {
-		dbName = "sessions_db"
-	}
+	// Use variables from env.go
+	dbUser := os.Getenv("MYSQL_USERNAME")
+	dbPass := os.Getenv("MYSQL_PASSWORD")
+	dbHost := os.Getenv("MYSQL_HOST")
+	dbPort := os.Getenv("MYSQL_PORT")
+	dbName := os.Getenv("MYSQL_DATABASE")
 
 	// Create the connection string
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
-		dbUser, "11", dbHost, dbPort, dbName)
+		dbUser, dbPass, dbHost, dbPort, dbName)
+	log.Printf("Connecting to database at %s\n", dsn)
 
 	// Connect to the database
 	var err error
@@ -99,17 +87,17 @@ func initDB() error {
 
 	// Create the sessions table if it doesn't exist
 	createTableSQL := `
-	CREATE TABLE IF NOT EXISTS sessions (
-		id INT AUTO_INCREMENT PRIMARY KEY,
-		session_id VARCHAR(255) NOT NULL,
-		ip_address VARCHAR(50) NOT NULL,
-		timestamp BIGINT NOT NULL,
-		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-		last_accessed DATETIME DEFAULT CURRENT_TIMESTAMP,
-		user_agent TEXT,
-		INDEX (session_id),
-		INDEX (ip_address)
-	)`
+    CREATE TABLE IF NOT EXISTS sessions (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        session_id VARCHAR(255) NOT NULL,
+        ip_address VARCHAR(50) NOT NULL,
+        timestamp BIGINT NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        last_accessed DATETIME DEFAULT CURRENT_TIMESTAMP,
+        user_agent TEXT,
+        INDEX (session_id),
+        INDEX (ip_address)
+    )`
 
 	_, err = db.Exec(createTableSQL)
 	if err != nil {
@@ -200,7 +188,7 @@ func handleSessionByID(w http.ResponseWriter, r *http.Request) {
 	)
 
 	err := db.QueryRow(
-		"SELECT id, ip_address, timestamp, created_at, last_accessed, user_agent, FROM sessions WHERE session_id = ?",
+		"SELECT id, ip_address, timestamp, created_at, last_accessed, user_agent FROM sessions WHERE session_id = ?",
 		sessionID,
 	).Scan(&id, &ip, &timestamp, &createdAt, &lastAccessed, &userAgent)
 

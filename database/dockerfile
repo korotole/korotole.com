@@ -12,7 +12,7 @@ RUN go mod download
 COPY . .
 
 # Build the application
-RUN go build -o bin-db-service main.go
+RUN go build -o bin-database main.go
 
 # Use a minimal image for the final container
 FROM debian:bookworm-slim
@@ -21,13 +21,13 @@ FROM debian:bookworm-slim
 RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory in the container
-WORKDIR /korotole.com/db-service
+WORKDIR /korotole.com/dayabase
 
 # Copy built binary from the builder
-COPY --from=builder /korotole.com/bin-db-service /korotole.com/bin-db-service
+COPY --from=builder /korotole.com/bin-database /korotole.com/bin-database
 
 # Expose the application's port
 EXPOSE 8082
 
 # Run the bot service
-CMD ["/korotole.com/bin-db-service"]
+CMD ["/korotole.com/bin-database"]

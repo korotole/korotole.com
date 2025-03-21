@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
@@ -62,7 +63,10 @@ func init() {
 	}
 
 	// Set the Telegram chat ID (this can be found through bot interaction)
-	telegramChatID = 448580548
+	telegramChatID, err = strconv.ParseInt(os.Getenv("TG_CHAT_ID"), 10, 64)
+	if err != nil {
+		log.Fatal("Failed to parse Telegram chat ID: ", err)
+	}
 }
 
 func notifyAdmin(message string) {

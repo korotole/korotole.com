@@ -18,8 +18,8 @@ var (
 )
 
 var microservices = []string{
-	"http://db-service:8082/health", // DB-service
-	"http://bot:8081/health",        // Telegram bot microservice
+	"http://database:8082/health", // DB-service
+	"http://bot:8081/health",      // Telegram bot microservice
 }
 
 // CheckHealth pings a microservice health endpoint
