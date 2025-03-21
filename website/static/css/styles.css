@@ -448,6 +448,54 @@ body, html {
     flex-wrap: wrap;
 }
 
+.newsletter-subscribe {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.form-box {
+    padding: 5px;
+    border: 2px solid #cc4432;     /* simple outline */
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+.form-box-header {
+    font-weight: bold;
+    margin-bottom: 2px;
+    justify-content: center;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-align: center;
+}
+.form-box input {
+    font-size: 14px;
+    color: #000;
+    border: none;
+    outline: none;
+    background: #f9f9f9;
+}
+
+.form-box input::placeholder {
+    color: #444;
+}
+
+.form-box button {
+    font-size: 14px;
+    color: #fff;
+    background: #444;
+    border: none;
+    outline: none;
+    padding: 5px 5px;
+    border-radius: 8px;
+    cursor: pointer;
+}
   /* Optional: Dark mode adjustments */
   @media (prefers-color-scheme: dark) {
     .action-btn {
