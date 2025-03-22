@@ -41,6 +41,7 @@ func InitRouter(database *web_rdb.Redis) {
 	http.HandleFunc("/cv", SessionControl(cvHandler))
 	http.HandleFunc("/login", SessionControl(loginHandler))
 	http.HandleFunc("/donate", SessionControl(donateHandler))
+	http.HandleFunc("/newsletter-register", SessionControl(newsletterRegisterHandler))
 }
 
 func Run(ListenAddr string) {
@@ -74,4 +75,36 @@ func cvHandler(w http.ResponseWriter, r *http.Request) {
 	defer file.Close()
 
 	http.ServeFile(w, r, pdfPath)
+}
+
+func newsletterRegisterHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println("Newsletter registration attempt detected")
+
+	// Parse the form data
+	if err := r.ParseForm(); err != nil {
+		log.Printf("Error parsing form: %v", err)
+		http.Error(w, "Error processing form submission", http.StatusBadRequest)
+		return
+	}
+
+	// Extract the email from the form
+	email := r.FormValue("email")
+	if email == "" {
+		log.Println("Missing email in newsletter registration form")
+		http.Error(w, "Email is required", http.StatusBadRequest)
+		return
+	}
+
+	var sessionID string
+	cookie, _ := r.Cookie("session_id")
+	sessionID = cookie.Value
+
+	var status, message = RegisterForNewsletter(email, sessionID)
+	if status != http.StatusOK {
+		http.Error(w, message, status)
+		return
+	}
+
+	// Return success page
+	tpl.ExecuteTemplate(w, "index.html", visitors)
 }

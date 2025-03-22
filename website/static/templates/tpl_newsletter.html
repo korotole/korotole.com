@@ -1,15 +1,77 @@
 {{define "Newsletter-Subscribe"}}
-
 <div class="newsletter-subscribe">
-    <form action="/subscribe" method="POST">
+    <form id="newsletter-form" action="/subscribe" method="POST">
         <div class="form-box-header">
-            <label for="ID-email">SUBSCRIBE TO NEWSLETTER</label>
+            <label id="newsletter-label" for="ID-email" data-original-text="SUBSCRIBE TO NEWSLETTER">SUBSCRIBE TO
+                NEWSLETTER</label>
         </div>
         <div class="form-box">
-            <input type="text" id="ID-email" name="email" value="your@email.here">
-            <button type="submit">🚀</button>
+            <input type="text" id="ID-email" name="email" placeholder="your@email.here"
+                data-original-placeholder="your@email.here">
+            <button type="submit" id="newsletter-submit-button" data-original-text="🚀">🚀</button>
         </div>
     </form>
 </div>
 
+<script>
+    function isValidEmail(email) {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailRegex.test(email);
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('newsletter-form');
+        const emailInput = document.getElementById('ID-email');
+        // const label = document.getElementById('newsletter-label');
+        const button = document.getElementById('newsletter-submit-button');
+
+        // Store original texts
+        const originalPlaceholder = emailInput.getAttribute('data-original-placeholder');
+        // const originalLabel = label.getAttribute('data-original-text');
+        const originalButton = button.getAttribute('data-original-text');
+
+        form.addEventListener('submit', function (e) {
+            // Prevent the default form submission
+            e.preventDefault();
+
+            // Get the email value
+            const email = emailInput.value.trim();
+            console.log('Email:', email);
+            // Validate email (basic validation)
+            if (!isValidEmail(email)) {
+                // Change the texts
+                emailInput.value = ""; // Clear the input
+                emailInput.placeholder = "Entered email is invalid!";
+                button.textContent = "❌";
+
+                // Disable the input field temporarily
+                emailInput.disabled = true;
+                // Reset the texts after 3 seconds
+                setTimeout(function () {
+                    emailInput.placeholder = originalPlaceholder;
+                    // label.textContent = originalLabel;
+                    button.textContent = originalButton;
+                    emailInput.disabled = false; // Re-enable the input
+                }, 2000);
+            }
+            else {
+                // Change the texts
+                emailInput.value = ""; // Clear the input
+                emailInput.placeholder = "You are subscribed! :)";
+                button.textContent = "✔️";
+                // label.textContent = "YOU'RE SUBSCRIBED!";
+
+                // Disable the input field temporarily
+                emailInput.disabled = true;
+                // Reset the texts after 3 seconds
+                setTimeout(function () {
+                    emailInput.placeholder = originalPlaceholder;
+                    // label.textContent = originalLabel;
+                    button.textContent = originalButton;
+                    emailInput.disabled = false; // Re-enable the input
+                }, 5000);
+            }
+
+        });
+    });
+</script>
 {{end}}

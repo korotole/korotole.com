@@ -1,0 +1,92 @@
+.wallet-container {
+    margin-bottom: none;
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    background: #f9f9f9;
+    border: 1px solid #e1e4e8;
+    overflow-x: auto;
+}
+
+.wallet-item-header {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.wallet-item-address {
+    line-height: 1.55;
+    font-size: 15px;
+    font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New;
+    display: flex;
+    flex-direction: column;
+    white-space: nowrap;
+    margin-top: 1px;
+}
+
+.wallet-qr {
+    width: 86px;
+    height: 86px;
+    border-radius: 5px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.wallet-network {
+    font-size: 14px;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.network-label {
+    font-weight: bold;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-right: 5px;
+}
+
+#image-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+#image-overlay img {
+    max-width: 75%;
+    max-height: 75%;
+    margin: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+.wallet-actions {
+    display: inline-flex;
+    gap: 8px;
+    justify-content: flex-start;
+    margin-right: 8px;
+}
+
+/* Optional: Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+
+    #image-overlay {
+        background-color: rgba(0, 0, 0, 0.8);
+        /* Dim the background */
+    }
+
+    .wallet-container {
+        background: #212121;
+        border: 1px solid #4a4a4a;
+    }
+}

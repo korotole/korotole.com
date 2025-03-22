@@ -1,0 +1,107 @@
+.newsletter-subscribe {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%; /* Takes full width of parent */
+}
+
+.form-box {
+    padding: 5px;
+    border-radius: 10px;
+    background: #f9f9f9;
+    border: 2px solid #e1e4e8;
+    min-width: 250px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.form-box-header {
+    font-size: 1.1em;
+    font-weight: 900;
+    line-height: 1.4em;
+    margin-bottom: 0.3em;
+    margin-bottom: 2px;
+    justify-content: center;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.form-box input {
+    flex: 1;
+    font-size: 14px;
+    color: #000;
+    border: none;
+    outline: none;
+    background: #f9f9f9;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: auto;
+    min-width: 250px;
+    font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New;
+}
+
+.form-box input::placeholder {
+    color: #777;
+}
+
+.form-box button {
+    font-size: 14px;
+    color: #fff;
+    background: #000;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-left: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.form-box button:hover {
+    background-color: #444;
+}
+
+.form-box button:active {
+    background-color: #555;
+}
+
+/* Optional: Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+
+    .form-box button:hover {
+        background-color: #f0f0f0;
+    }
+
+    .form-box button:active {
+        background-color: #e0e0e0;
+    }
+
+    .form-box input {
+        background: #212121;
+        color: #fff;
+    }
+    .form-box {
+        background: #212121;
+        border: 2px solid #4a4a4a;
+        color: #fff;
+    }
+    .form-box button {
+        color: #000;
+        background: #fff;
+    }
+}
+
+/* Mobile (469px and below) */
+@media only screen and (min-width: 460px) {
+    .form-box,
+    .form-box input {
+        min-width: 300px;
+    }
+}

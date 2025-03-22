@@ -130,19 +130,19 @@ func updateDatabase(ssnId string, IP string, tmStmp string, usrAgnt string) {
 	}
 
 	// Define the URL of the db-service
-	dbServiceURL := "http://db-service:8082/sessions"
+	var dbServiceURL = "http://database:" + os.Getenv("DATABASE_PORT") + "/sessions"
 
 	// Send a POST request to the db-service
 	resp, err := http.Post(dbServiceURL, "application/json", bytes.NewBuffer(payload))
 	if err != nil {
-		log.Printf("Error sending data to db-service: %v\n", err)
+		log.Printf("Error sending data to database: %v\n", err)
 		return
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		log.Printf("db-service returned an error: %v\n", resp.Status)
+		log.Printf("database returned an error: %v\n", resp.Status)
 	} else {
-		log.Println("Session data successfully stored in the database via db-service")
+		log.Println("Session data successfully stored")
 	}
 }

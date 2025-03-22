@@ -9,4 +9,3 @@
 - subscribe for news
 - file storage
 - stats
-- environment variables
