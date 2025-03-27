@@ -101,10 +101,11 @@ func newsletterRegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	var status, message = RegisterForNewsletter(email, sessionID)
 	if status != http.StatusOK {
+		log.Printf("Error registering for newsletter: %s", message)
 		http.Error(w, message, status)
 		return
 	}
 
-	// Return success page
-	tpl.ExecuteTemplate(w, "index.html", visitors)
+	w.WriteHeader(314)
+	w.Write([]byte(message)) // Write the success message to the response
 }
