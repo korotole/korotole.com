@@ -125,7 +125,7 @@ func updateDatabase(ssnId string, IP string, tmStmp string, usrAgnt string) {
 
 	payload, err := json.Marshal(requestData)
 	if err != nil {
-		log.Printf("Error marshaling request data for db-service: %v\n", err)
+		log.Printf("Error marshaling request data for database: %v\n", err)
 		return
 	}
 

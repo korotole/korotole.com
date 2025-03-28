@@ -80,8 +80,13 @@ func cvHandler(w http.ResponseWriter, r *http.Request) {
 func newsletterRegisterHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("Newsletter registration attempt detected")
 
-	// Parse the form data
-	if err := r.ParseForm(); err != nil {
+	if r.Method != "POST" {
+		log.Println("Invalid request method for newsletter registration")
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		return
+	}
+
+	if err := r.ParseMultipartForm(1 << 10); err != nil {
 		log.Printf("Error parsing form: %v", err)
 		http.Error(w, "Error processing form submission", http.StatusBadRequest)
 		return
@@ -95,6 +100,8 @@ func newsletterRegisterHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	log.Printf("Parsed Form: %v", r.Form)
+
 	var sessionID string
 	cookie, _ := r.Cookie("session_id")
 	sessionID = cookie.Value
@@ -106,6 +113,7 @@ func newsletterRegisterHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.WriteHeader(314)
-	w.Write([]byte(message)) // Write the success message to the response
+	// Explicit success response
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte("Successfully subscribed!"))
 }

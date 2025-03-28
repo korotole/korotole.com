@@ -1,6 +1,6 @@
 {{define "Newsletter-Subscribe"}}
 <div class="newsletter-subscribe">
-    <form id="newsletter-form" action="/subscribe" method="POST">
+    <form id="newsletter-form" action="/newsletter-register" method="POST">
         <div class="form-box-header">
             <label id="newsletter-label" for="ID-email" data-original-text="SUBSCRIBE TO NEWSLETTER">SUBSCRIBE TO
                 NEWSLETTER</label>
@@ -18,15 +18,14 @@
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         return emailRegex.test(email);
     }
+
     document.addEventListener('DOMContentLoaded', function () {
         const form = document.getElementById('newsletter-form');
         const emailInput = document.getElementById('ID-email');
-        // const label = document.getElementById('newsletter-label');
         const button = document.getElementById('newsletter-submit-button');
 
         // Store original texts
         const originalPlaceholder = emailInput.getAttribute('data-original-placeholder');
-        // const originalLabel = label.getAttribute('data-original-text');
         const originalButton = button.getAttribute('data-original-text');
 
         form.addEventListener('submit', function (e) {
@@ -36,42 +35,65 @@
             // Get the email value
             const email = emailInput.value.trim();
             console.log('Email:', email);
-            // Validate email (basic validation)
+
+            // Validate email
             if (!isValidEmail(email)) {
-                // Change the texts
+                // Handle invalid email
                 emailInput.value = ""; // Clear the input
                 emailInput.placeholder = "Entered email is invalid!";
                 button.textContent = "❌";
-
-                // Disable the input field temporarily
                 emailInput.disabled = true;
-                // Reset the texts after 3 seconds
+
                 setTimeout(function () {
                     emailInput.placeholder = originalPlaceholder;
-                    // label.textContent = originalLabel;
                     button.textContent = originalButton;
-                    emailInput.disabled = false; // Re-enable the input
+                    emailInput.disabled = false;
                 }, 2000);
-            }
-            else {
-                // Change the texts
+            } else {
+                // Handle valid email and submit form programmatically
                 emailInput.value = ""; // Clear the input
-                emailInput.placeholder = "You are subscribed! :)";
-                button.textContent = "✔️";
-                // label.textContent = "YOU'RE SUBSCRIBED!";
-
-                // Disable the input field temporarily
+                emailInput.placeholder = "Subscribing...";
+                button.textContent = "⏳";
                 emailInput.disabled = true;
-                // Reset the texts after 3 seconds
-                setTimeout(function () {
-                    emailInput.placeholder = originalPlaceholder;
-                    // label.textContent = originalLabel;
-                    button.textContent = originalButton;
-                    emailInput.disabled = false; // Re-enable the input
-                }, 5000);
-            }
 
+                // Create FormData object to send the email
+                const formData = new FormData();
+                formData.append('email', email);
+
+                // Submit the form using fetch
+                fetch('/newsletter-register', {
+                    method: 'POST',
+                    body: formData,
+                })
+                    .then(response => {
+                        // Check the response status code
+                        if (response.ok) { // Status code 200-299
+                            emailInput.placeholder = "You are subscribed! :)";
+                            button.textContent = "✔️";
+                            setTimeout(() => resetForm(), 5000);
+                        } else {
+                            // Handle server errors (e.g., 400, 500)
+                            emailInput.placeholder = "Subscription failed!";
+                            button.textContent = "❌";
+                            setTimeout(() => resetForm(), 2000);
+                        }
+                    })
+                    .catch(error => {
+                        // Handle network errors
+                        console.error('Error:', error);
+                        emailInput.placeholder = "Network error!";
+                        button.textContent = "❌";
+                        setTimeout(() => resetForm(), 2000);
+                    });
+            }
         });
+
+        // Helper function to reset form
+        function resetForm() {
+            emailInput.placeholder = originalPlaceholder;
+            button.textContent = originalButton;
+            emailInput.disabled = false;
+        }
     });
 </script>
 {{end}}
