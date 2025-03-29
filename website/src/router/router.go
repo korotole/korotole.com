@@ -100,11 +100,14 @@ func newsletterRegisterHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Printf("Parsed Form: %v", r.Form)
+	cookie, err := r.Cookie("session-id")
+	if err != nil {
+		log.Printf("Error retrieving session ID from cookie: %v", err)
+		http.Error(w, "Session ID not found", http.StatusBadRequest)
+		return
+	}
 
-	var sessionID string
-	cookie, _ := r.Cookie("session_id")
-	sessionID = cookie.Value
+	sessionID := cookie.Value
 
 	var status, message = RegisterForNewsletter(email, sessionID)
 	if status != http.StatusOK {

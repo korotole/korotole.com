@@ -12,7 +12,7 @@ RUN go mod download
 COPY . .
 
 # Build the application
-RUN go build -o bin-database main.go
+RUN go build -o bin-database *.go
 
 # Use a minimal image for the final container
 FROM debian:bookworm-slim

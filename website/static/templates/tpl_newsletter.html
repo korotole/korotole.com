@@ -34,7 +34,6 @@
 
             // Get the email value
             const email = emailInput.value.trim();
-            console.log('Email:', email);
 
             // Validate email
             if (!isValidEmail(email)) {
@@ -75,7 +74,7 @@
                             // Handle server errors (e.g., 400, 500)
                             emailInput.placeholder = "Subscription failed!";
                             button.textContent = "❌";
-                            setTimeout(() => resetForm(), 2000);
+                            setTimeout(() => resetForm(), 3000);
                         }
                     })
                     .catch(error => {
@@ -83,7 +82,7 @@
                         console.error('Error:', error);
                         emailInput.placeholder = "Network error!";
                         button.textContent = "❌";
-                        setTimeout(() => resetForm(), 2000);
+                        setTimeout(() => resetForm(), 3000);
                     });
             }
         });

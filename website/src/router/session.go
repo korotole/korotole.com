@@ -40,7 +40,8 @@ var (
 func SessionControl(HandlerFunc http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		_, err := r.Cookie("session-id")
-		// log.Println("cookie:", cookie, "err:", err)
+
+		// new visitor
 		if err != nil {
 			clientIP, ssnId, tmStmp, usrAgnt := establishSession(&w, r)
 			// Notify the Telegram bot microservice about the new connection
@@ -75,7 +76,11 @@ func establishSession(w *http.ResponseWriter, r *http.Request) (string, string, 
 		MaxAge:   ssnCfg.MaxAge,
 	}
 
+	// set the cookie for client
 	http.SetCookie(*w, cookie)
+	// set the cookie for current request
+	(*r).AddCookie(cookie)
+
 	log.Println("Website accessed: ", clientIP)
 	log.Println("Session created: ", hash)
 	log.Println("Timestamp: ", timestamp)
