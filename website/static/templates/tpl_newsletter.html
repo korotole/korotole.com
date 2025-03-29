@@ -41,12 +41,15 @@
                 emailInput.value = ""; // Clear the input
                 emailInput.placeholder = "Entered email is invalid!";
                 button.textContent = "❌";
+                
                 emailInput.disabled = true;
+                button.disabled = true;
 
                 setTimeout(function () {
                     emailInput.placeholder = originalPlaceholder;
                     button.textContent = originalButton;
                     emailInput.disabled = false;
+                    button.disabled = false;
                 }, 2000);
             } else {
                 // Handle valid email and submit form programmatically
@@ -69,7 +72,7 @@
                         if (response.ok) { // Status code 200-299
                             emailInput.placeholder = "You are subscribed! :)";
                             button.textContent = "✔️";
-                            setTimeout(() => resetForm(), 5000);
+                            setTimeout(() => resetForm(), 4000);
                         } else {
                             // Handle server errors (e.g., 400, 500)
                             emailInput.placeholder = "Subscription failed!";
@@ -92,6 +95,7 @@
             emailInput.placeholder = originalPlaceholder;
             button.textContent = originalButton;
             emailInput.disabled = false;
+            button.disabled = false;
         }
     });
 </script>
