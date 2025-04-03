@@ -122,6 +122,41 @@ html {
     color: #999;
 }
 
+.topper {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    top: 0; /* Changed from bottom: 0 to position at the top */
+    left: 50%;
+    /* Center the topper */
+    transform: translateX(-50%);
+    /* Offset by half its width to truly center */
+    width: 100%;
+    max-width: 550px;
+    /* Match the max-width of .b-page */
+    text-align: left;
+    padding: 0 15px;
+    /* Match the padding of .b-page */
+    line-height: 16px;
+    /* Match the height */
+    overflow: hidden;
+    /* Prevent text overflow */
+    margin: 0;
+    vertical-align: middle;
+    /* Center text vertically */
+    background: #fff;
+    /* Paper-like color for light mode */
+    color: #999;
+    padding-top: 10px;
+}
+
+.infobar {
+    flex: 1;
+}
+
+.controls {
+    font-size: 1.5em;
+}
 .emoji-btn {
     text-decoration: none;
     /* Remove underline */
@@ -387,6 +422,10 @@ html {
     .footer {
         background: #1a1a1a;
         color: #fff;
+    }
+    .topper {
+        background: #1a1a1a;
+        color: #999;
     }
 
     a {

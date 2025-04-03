@@ -9,6 +9,8 @@
 <body>
   <div class="b-page">
 
+    {{template "Topper"}}
+
     {{template "Header"}}
 
     <h3>Contacts & Media:</h3>
@@ -64,6 +66,35 @@
         </button>
       </a>
 
+      <a style="border-bottom: none;" href="https://lichess.org/@/korotole">
+        <button class="row-btn">
+          <picture>
+            <source srcset="/static/assets/icons/lichess-light.svg" media="(prefers-color-scheme: dark)">
+            <img src="/static/assets/icons/lichess-dark.svg" alt="lichess" class="icon-big">
+          </picture>
+          <span>Lichess</span>
+        </button>
+      </a>
+
+      <a style="border-bottom: none;" href="https://www.codewars.com/users/korotole">
+        <button class="row-btn">
+          <picture>
+            <source srcset="/static/assets/icons/codewars-dark.svg" media="(prefers-color-scheme: dark)">
+            <img src="/static/assets/icons/codewars-light.svg" alt="codewars" class="icon-big">
+          </picture>
+          <span>Codewars</span>
+        </button>
+      </a>
+
+      <a style="border-bottom: none;" href="https://korotetskyi.medium.com/">
+        <button class="row-btn">
+          <picture>
+            <source srcset="/static/assets/icons/medium-dark.svg" media="(prefers-color-scheme: dark)">
+            <img src="/static/assets/icons/medium-light.svg" alt="medium" class="icon-big">
+          </picture>
+          <span>Medium</span>
+        </button>
+      </a>
     </p>
 
     <!-- <p>
