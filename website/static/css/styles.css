@@ -91,6 +91,7 @@ html {
 }
 
 .footer {
+    z-index: 10;
     /* height: 40px; Reduced from 20px */
     position: fixed;
     bottom: 0;
@@ -123,6 +124,7 @@ html {
 }
 
 .topper {
+    z-index: 10;
     position: fixed;
     display: flex;
     flex-direction: row;
