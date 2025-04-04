@@ -24,9 +24,25 @@
       </div>
     </div>
 
-    <div id="Edit" class="tab-content" style="display:block">
-      <h2>Edit tab</h2>
-      <p>Please, add another book.</p>
+    <div id="Edit" class="subtabs-nav">
+
+      <div class="tab-vertical-buttons-left" >
+        <div class="tab-special-v" id="AddBtn">
+          <button class="tab-button subtablink" onclick="openSubTab(event,'Add')">➕</button>
+        </div>
+        <div class="tab-special-v" id="DeleteBtn">
+          <button class="tab-button subtablink" onclick="openSubTab(event,'Delete')">➖</button>
+        </div>
+      </div>
+
+      <div id="Add" class="subtab-content" style="display:none">
+        <h2>Add a book</h2>
+        <p>!!!!!!!!</p>
+      </div>
+      <div id="Delete" class="subtab-content" style="display:none">
+        <h2>Remove a book</h2>
+        <p>??????</p>
+      </div>
     </div>
 
     <div id="Search" class="tab-content" style="display:none">
@@ -38,7 +54,7 @@
       <h2>Finished</h2>
       <p>Search for books.</p>
       <div class="book">
-        <h4>Herculaneum Scrolls</h4>
+        <h2>Herculaneum Scrolls</h2>
         <p>V informatice se jedná o odborný technický pojem, kterým je označen zvláštní datový typ (běžnější je string
           nebo řetězec) nebo datový formát. Text je cokoliv, co je uloženo v textovém formátu (t.j. přímo v textových
           znacích, kódovaných např. v ASCII, ANSI, Unicode, UTF-8, …), a to i v případě, že daný textový řetězec
@@ -57,7 +73,7 @@
       </div>
 
       <div class="book">
-        <h4>Ancient Scrolls</h4>
+        <h2>Ancient Scrolls</h2>
         <p>V informatice se jedná o odborný technický pojem, kterým je označen zvláštní datový typ (běžnější je string
           nebo řetězec) nebo datový formát. Text je cokoliv, co je uloženo v textovém formátu (t.j. přímo v textových
           znacích, kódovaných např. v ASCII, ANSI, Unicode, UTF-8, …), a to i v případě, že daný textový řetězec
@@ -99,6 +115,20 @@
       x[i].style.display = "none";
     }
     tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < x.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+  function openSubTab(evt, tabName) {
+    var i, x, tablinks;
+    x = document.getElementsByClassName("subtab-content");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("subtablink");
     for (i = 0; i < x.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
     }

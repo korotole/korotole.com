@@ -12,6 +12,14 @@
     align-items: center;
 }
 
+.subtabs-nav {
+    padding-left: auto;
+    padding-right: auto;
+    margin-bottom: none;
+    display: flex !important;
+    align-items: center;
+}
+
 .tabs {
     margin-left: 5px;
     margin-right: 5px;
@@ -30,19 +38,38 @@
 }
 
 .tab-special {
-    font-size: 1.3em;
+    font-size: 1.1em;
     border-radius: 12px;
     background: #f9f9f9;
     border: 1px solid #e1e4e8;
     overflow-x: auto;
 }
 
+.tab-special-v {
+    margin-top: 5px;
+    font-size: 1.1em;
+    border-radius: 12px;
+    background: #f9f9f9;
+    border: 1px solid #e1e4e8;
+    overflow-x: auto;
+}
+
+.tab-vertical-buttons-left
+{   
+    padding-left: auto;
+    padding-right: auto;
+    margin-bottom: none;
+    display: flex !important;
+    align-items: start;
+    flex-direction: column;
+}
+
 .tab-button {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1.1em;
-    font-weight: 800;
+    font-size: 1em;
+    font-weight: 600;
     transition: all 0.1s ease;
     flex: 1;
     text-align: center;
@@ -66,9 +93,15 @@
     /* padding: 30px; */
 }
 
+.subtab-content {
+    display: none;
+    margin: 10px;
+    /* padding: 30px; */
+}
+
 .tab-content.active {
     display: block;
-    animation: fadeIn 0.5s ease;
+    animation: fadeIn 0.1s ease;
 }
 
 .books-collection {
@@ -176,7 +209,8 @@
         color: #fff;
     }
 
-    .tab-special {
+    .tab-special,
+    .tab-special-v {
         background: #212121;
         border: 1px solid #4a4a4a;
         color: #fff;
@@ -206,24 +240,13 @@
     }
 }
 
-
-
-/* @media (max-width: 768px) {
-    .tabs-nav {
-        flex-direction: column;
-    }
-    
+/* Mobile (469px and below) */
+@media only screen and (min-width: 460px) {
     .tab-button {
-        border-bottom: 1px solid #ddd;
-        border-left: 3px solid transparent;
+        font-size: 1.1em;
+        font-weight: 700px;
     }
-    
-    .tab-button.active {
-        border-bottom: 1px solid #ddd;
-        border-left: 3px solid #4a6cf7;
+    .tab-special {
+        font-size: 1.3em;
     }
-    
-    .tab-content {
-        padding: 20px;
-    }
-} */
+}
