@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>korotole | books</title>
+    {{template "Metadata"}}
+</head>
+
+<body>
+    <div class="b-page">
+
+        {{template "Topper"}}
+
+        <div class="tabs-nav">
+            <div class="tab-special">
+                <button class="tab-button tablink" onclick="openCity(event,'Paris')">✏️</button>
+            </div>
+            <div class="tabs">
+                <button class="tab-button tablink active" onclick="openCity(event,'London')">🏁 Finished</button>
+                <button class="tab-button tablink" onclick="openCity(event,'Paris')">📌 Planned</button>
+            </div>
+            <div class="tab-special">
+                <button class="tab-button tablink" onclick="openCity(event,'Paris')">🔍</button>
+            </div>
+        </div>
+
+        <div id="London" class="tab-content">
+            <h2>London</h2>
+            <p>London is the capital city of England.</p>
+        </div>
+
+        <div id="Paris" class="tab-content" style="display:none">
+            <h2>Paris</h2>
+            <p>Paris is the capital of France.</p>
+        </div>
+
+
+
+
+        {{template "Footer" .}}
+
+    </div>
+</body>
+
+<script>
+    function openCity(evt, cityName) {
+        var i, x, tablinks;
+        x = document.getElementsByClassName("tab-content");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < x.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(cityName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+
+</html>

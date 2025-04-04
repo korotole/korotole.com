@@ -1,0 +1,129 @@
+.tabs-container {
+    margin: 30px 0;
+    border-radius: 16px;
+    overflow: hidden;
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+}
+
+/* Tab navigation */
+.tabs-nav {
+    padding-left: auto;
+    padding-right: auto;
+    margin-bottom: none;
+    display: flex !important;
+    align-items: center;
+}
+
+.tabs {
+    /* padding: 12px 24px; */
+    margin-left: 5px;
+    margin-right: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    /* text-align: center; */
+    /* color: #666; */
+    /* border-bottom: 3px solid transparent; */
+    /* gap: 6px; */
+    /* margin-bottom: 20px; */
+    /* padding: 1px; */
+    border-radius: 14px;
+    background: #f9f9f9;
+    border: 2px solid #4a4a4a;
+    overflow-x: auto;
+}
+
+.tab-special{
+    /* padding: 3px 3px 3px 3px; */
+    font-size: 1.3em;
+    border-radius: 12px;
+    background: #f9f9f9;
+    border: 2px solid #4a4a4a;
+    overflow-x: auto;
+}
+
+.tab-button {
+    /* padding: 12px 24px; */
+    background: none;
+    border: none;
+    cursor: pointer;
+    /* font-size: 16px; */
+    font-size: 1.1em;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    flex: 1;
+    text-align: center;
+    color: #666;
+    /* border-bottom: 3px solid transparent; */
+    padding: 8px;
+    border-radius: 10px;
+}
+
+.tab-button:hover {
+    /* background-color: #eaeaea; */
+    color: #333;
+}
+
+.tab-button.active {
+    /* background-color: #fff; */
+    background-color: #fff;
+    /* border-bottom: 2px solid #f9f9f9; */
+}
+
+/* Tab content */
+.tab-content {
+    display: none;
+    padding: 30px;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@media (prefers-color-scheme: dark) {
+
+    .tabs {
+        background: #212121;
+        border: 2px solid #525252;
+        color: #fff;
+    }
+
+    .tab-special {
+        background: #212121;
+        border: 2px solid #4a4a4a;
+        color: #fff;
+    }
+}
+
+
+
+/* @media (max-width: 768px) {
+    .tabs-nav {
+        flex-direction: column;
+    }
+    
+    .tab-button {
+        border-bottom: 1px solid #ddd;
+        border-left: 3px solid transparent;
+    }
+    
+    .tab-button.active {
+        border-bottom: 1px solid #ddd;
+        border-left: 3px solid #4a6cf7;
+    }
+    
+    .tab-content {
+        padding: 20px;
+    }
+} */

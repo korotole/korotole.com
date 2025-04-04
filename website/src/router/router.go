@@ -39,6 +39,7 @@ func InitRouter(database *web_rdb.Redis) {
 	// Page handlers
 	http.HandleFunc("/", SessionControl(indexHandler))
 	http.HandleFunc("/cv", SessionControl(cvHandler))
+	http.HandleFunc("/books", SessionControl(booksHandler))
 	http.HandleFunc("/login", SessionControl(loginHandler))
 	http.HandleFunc("/donate", SessionControl(donateHandler))
 	http.HandleFunc("/newsletter-register", SessionControl(newsletterRegisterHandler))
@@ -51,6 +52,10 @@ func Run(ListenAddr string) {
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	tpl.ExecuteTemplate(w, "index.html", visitors)
+}
+
+func booksHandler(w http.ResponseWriter, r *http.Request) {
+	tpl.ExecuteTemplate(w, "books.html", visitors)
 }
 
 func donateHandler(w http.ResponseWriter, r *http.Request) {
