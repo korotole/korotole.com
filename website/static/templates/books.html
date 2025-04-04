@@ -116,10 +116,13 @@
     const MIN_HEIGHT = 80;
     const MAX_HEIGHT = 800;
     const STEP = 1;
+    const SCROLL_SPEED = 10; // Speed of auto-scrolling
+    const SCROLL_BOUNDARY = 85; // How close to the viewport edge to trigger scrolling
 
     // Variables for drag state
     let startY, startHeight;
     let isDragging = false;
+    let autoScrollIntervalId = null;
 
     const initDrag = function (e) {
       if (e.type === 'mousedown') {
@@ -148,18 +151,34 @@
 
       // Get current position
       const currentY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
-
-      // Check if cursor is still within the visible viewport
       const viewportHeight = window.innerHeight;
-      const footer = document.querySelector('footer') || document.getElementById('footer');
 
-      // Get footer position or use viewport bottom if no footer exists
-      const footerTop = footer ? footer.getBoundingClientRect().top : viewportHeight;
+      // Get book boundaries
+      const bookRect = book.getBoundingClientRect();
+      const header = document.querySelector('header') || document.getElementById('header');
+      const headerBottom = header ? header.getBoundingClientRect().bottom : 0;
 
-      // If cursor is below the footer or outside viewport, stop dragging
-      if (currentY >= footerTop || currentY >= viewportHeight || currentY < 0) {
-        stopDrag();
-        return;
+      // Check if we need to auto-scroll
+      if (currentY > viewportHeight - SCROLL_BOUNDARY) {
+        // Near bottom of viewport - start scrolling down if not already
+        if (!autoScrollIntervalId) {
+          autoScrollIntervalId = setInterval(() => {
+            window.scrollBy(0, SCROLL_SPEED);
+          }, 16); // ~60fps
+        }
+      } else if (currentY < headerBottom + SCROLL_BOUNDARY) {
+        // Near top/header - start scrolling up if not already
+        if (!autoScrollIntervalId) {
+          autoScrollIntervalId = setInterval(() => {
+            window.scrollBy(0, -SCROLL_SPEED);
+          }, 16); // ~60fps
+        }
+      } else {
+        // Not near edges, stop auto-scrolling
+        if (autoScrollIntervalId) {
+          clearInterval(autoScrollIntervalId);
+          autoScrollIntervalId = null;
+        }
       }
 
       if (animationFrameId) {
@@ -167,16 +186,23 @@
       }
 
       animationFrameId = requestAnimationFrame(() => {
+        // Calculate new height
         const rawHeight = startHeight + currentY - startY;
         const snapped = Math.round(rawHeight / STEP) * STEP;
-        const clamped = Math.max(MIN_HEIGHT, Math.min(snapped, MAX_HEIGHT));
 
-        // Additional check - ensure the bottom of the book doesn't go below footer
-        const bookTop = book.getBoundingClientRect().top;
-        const maxAllowedHeight = footerTop - bookTop - 10; // 10px buffer
+        // Apply minimum height constraint
+        let finalHeight = Math.max(MIN_HEIGHT, snapped);
 
-        // Use the more restrictive of our limits
-        const finalHeight = Math.min(clamped, maxAllowedHeight);
+        // Check if the top of the book is below header
+        if (bookRect.top < headerBottom) {
+          // Don't allow resizing if it would push the top above the header
+          finalHeight = Math.min(finalHeight, bookRect.height);
+        }
+
+        // Apply maximum height constraint
+        finalHeight = Math.min(finalHeight, MAX_HEIGHT);
+
+        // Apply the height
         book.style.height = finalHeight + 'px';
       });
     };
@@ -186,6 +212,11 @@
 
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
+      }
+
+      if (autoScrollIntervalId) {
+        clearInterval(autoScrollIntervalId);
+        autoScrollIntervalId = null;
       }
 
       isDragging = false;
