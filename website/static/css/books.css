@@ -90,28 +90,8 @@
     box-sizing: border-box;
     transition: height 0.01s ease-in-out;
     width: 100%;
-
+    margin-bottom: 20px;
 }
-
-/* .resizer {
-    width: 120px;
-    height: 8px;
-    background: #999;
-    color: #000;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 0;
-    cursor: ns-resize;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-    margin-top: 8px;
-    opacity: 0;
-    transition: opacity 0.01s ease-in-out;
-    opacity: 1;
-} */
 
 .resizer {
     position: absolute;
@@ -144,6 +124,7 @@
     background-color: #000;
     border-radius: 2px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    transition: ease 0.2s;
   }
 
   .resizable {
@@ -153,9 +134,30 @@
   /* Optional: Add visual feedback when dragging */
   .resizable.dragging .resizer::after {
     background-color: #4a90e2;
-    width: 70px;
+    width: 116px;
+    /* transition: ease 0.2s; */
+    transition: ease 0.2s;
   }
 
+  /* .resizer {
+    width: 120px;
+    height: 8px;
+    background: #999;
+    color: #000;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    cursor: ns-resize;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-top: 8px;
+    opacity: 0;
+    transition: opacity 0.01s ease-in-out;
+    opacity: 1;
+} */
 @keyframes fadeIn {
     from {
         opacity: 0;

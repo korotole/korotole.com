@@ -55,6 +55,26 @@
           Nicméně, dekódování původního textu z různých grafických netextových formátů je dnes běžně možné pomocí
           specializovaného software, např. pomocí OCR programů s relativně vysokou mírou přesnosti. </p>
       </div>
+
+      <div class="book">
+        <h4>Ancient Scrolls</h4>
+        <p>V informatice se jedná o odborný technický pojem, kterým je označen zvláštní datový typ (běžnější je string
+          nebo řetězec) nebo datový formát. Text je cokoliv, co je uloženo v textovém formátu (t.j. přímo v textových
+          znacích, kódovaných např. v ASCII, ANSI, Unicode, UTF-8, …), a to i v případě, že daný textový řetězec
+          (posloupnost znaků) nedává žádný smysl v žádném přirozeném ani formálním jazyce, a dokonce i v případě, že
+          délka textu je nulová (0 znaků). Podstatný je zde typ nebo formát, kde pevnému počtu bajtů (počítačových slov)
+          odpovídá vždy konkrétní znak dané abecedy.
+
+          Text (dle jazykovědy, tj. posloupnost slov, nesoucí význam) nakreslený v obrázku (tj. např. vyfotografovaná
+          cedule s nápisem) není z pohledu informatiky „prostým textem“ (anglicky plain text), neboť „z pohledu
+          počítače“ se již nejedná o soubor písmen, ale o binární data grafických objektů (různě barevné body, křivky,
+          …) respektive se jedná o datový typ nebo formát, jenž není z hlediska informatiky považován za textový. V
+          tomto formátu text není zakódován po jednotlivých znacích dané abecedy v daném počtu bajtů.
+
+          Nicméně, dekódování původního textu z různých grafických netextových formátů je dnes běžně možné pomocí
+          specializovaného software, např. pomocí OCR programů s relativně vysokou mírou přesnosti. </p>
+      </div>
+
     </div>
 
     <div id="Planned" class="tab-content" style="display:none">
@@ -87,25 +107,21 @@
   }
 
   document.querySelectorAll('.book').forEach(book => {
-    // Create resizer element once outside of the loop
     const resizer = document.createElement('div');
     resizer.className = 'resizer';
     book.appendChild(resizer);
     book.classList.add('resizable');
 
     // Constants
-    const MIN_HEIGHT = 60;
-    const MAX_HEIGHT = 780;
+    const MIN_HEIGHT = 80;
+    const MAX_HEIGHT = 800;
     const STEP = 1;
 
     // Variables for drag state
     let startY, startHeight;
     let isDragging = false;
 
-    // Optimization: Use passive event listeners where possible
-    // Optimization: Store reference to bound functions for removal
     const initDrag = function (e) {
-      // Prevent default only for mouse events (not for passive touch events)
       if (e.type === 'mousedown') {
         e.preventDefault();
         e.stopPropagation();
@@ -115,8 +131,8 @@
       startY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
       startHeight = parseInt(window.getComputedStyle(book).height, 10);
       isDragging = true;
+      book.classList.add('dragging');
 
-      // Add event listeners to document only when dragging starts
       document.addEventListener('mousemove', doDrag, { passive: false });
       document.addEventListener('touchmove', doDrag, { passive: false });
       document.addEventListener('mouseup', stopDrag);
@@ -124,19 +140,28 @@
       document.addEventListener('touchcancel', stopDrag);
     };
 
-    // Optimization: Use requestAnimationFrame for smoother resizing
     let animationFrameId = null;
 
     const doDrag = function (e) {
       if (!isDragging) return;
-
-      // Prevent default to avoid scrolling while resizing
       e.preventDefault();
 
       // Get current position
       const currentY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
 
-      // Optimization: Use requestAnimationFrame to throttle visual updates
+      // Check if cursor is still within the visible viewport
+      const viewportHeight = window.innerHeight;
+      const footer = document.querySelector('footer') || document.getElementById('footer');
+
+      // Get footer position or use viewport bottom if no footer exists
+      const footerTop = footer ? footer.getBoundingClientRect().top : viewportHeight;
+
+      // If cursor is below the footer or outside viewport, stop dragging
+      if (currentY >= footerTop || currentY >= viewportHeight || currentY < 0) {
+        stopDrag();
+        return;
+      }
+
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
       }
@@ -145,19 +170,27 @@
         const rawHeight = startHeight + currentY - startY;
         const snapped = Math.round(rawHeight / STEP) * STEP;
         const clamped = Math.max(MIN_HEIGHT, Math.min(snapped, MAX_HEIGHT));
-        book.style.height = clamped + 'px';
+
+        // Additional check - ensure the bottom of the book doesn't go below footer
+        const bookTop = book.getBoundingClientRect().top;
+        const maxAllowedHeight = footerTop - bookTop - 10; // 10px buffer
+
+        // Use the more restrictive of our limits
+        const finalHeight = Math.min(clamped, maxAllowedHeight);
+        book.style.height = finalHeight + 'px';
       });
     };
 
     const stopDrag = function () {
-      // Cancel any pending animation frame
+      if (!isDragging) return;
+
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
       }
 
       isDragging = false;
+      book.classList.remove('dragging');
 
-      // Clean up event listeners when done
       document.removeEventListener('mousemove', doDrag);
       document.removeEventListener('touchmove', doDrag);
       document.removeEventListener('mouseup', stopDrag);
@@ -165,7 +198,6 @@
       document.removeEventListener('touchcancel', stopDrag);
     };
 
-    // Add initial event listeners with proper options
     resizer.addEventListener('mousedown', initDrag, { passive: false });
     resizer.addEventListener('touchstart', initDrag, { passive: true });
   });
