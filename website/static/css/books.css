@@ -19,7 +19,7 @@
     border: none;
     cursor: pointer;
     font-size: 16px;
-    transition: all 0.3s ease;
+    transition: all 0.1s ease;
     display: flex;
     flex-direction: row;
     flex: 1;
@@ -29,7 +29,7 @@
     overflow-x: auto;
 }
 
-.tab-special{
+.tab-special {
     font-size: 1.3em;
     border-radius: 12px;
     background: #f9f9f9;
@@ -43,7 +43,7 @@
     cursor: pointer;
     font-size: 1.1em;
     font-weight: 800;
-    transition: all 0.3s ease;
+    transition: all 0.1s ease;
     flex: 1;
     text-align: center;
     color: #000;
@@ -62,7 +62,8 @@
 
 .tab-content {
     display: none;
-    padding: 30px;
+    margin: 10px;
+    /* padding: 30px; */
 }
 
 .tab-content.active {
@@ -70,9 +71,56 @@
     animation: fadeIn 0.5s ease;
 }
 
+.books-collection {
+    display: flex;
+    flex-direction: column;
+}
+
+.book {
+    position: relative;
+    display: inline-block;
+    padding: 16px;
+    border: 1px solid #999;
+    border-bottom: 4px solid #999;
+    border-radius: 8px;
+    height: 120px;
+    background-color: #f9f9f9;
+    color:#000;
+    overflow: hidden;
+    box-sizing: border-box;
+    transition: height 0.01s ease-in-out;
+    width: 100%;
+
+}
+
+.book .resizer {
+    width: 120px;
+    height: 8px;
+    background: #999;
+    color: #000;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    cursor: ns-resize;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-top: 8px;
+    opacity: 0;
+    transition: opacity 0.01s ease-in-out;
+    opacity: 1;
+}
+
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -90,6 +138,11 @@
     }
 
     .tab-button {
+        color: #fff;
+    }
+
+    .book {
+        background-color: #212121;
         color: #fff;
     }
 

@@ -2,68 +2,173 @@
 <html>
 
 <head>
-    <title>korotole | books</title>
-    {{template "Metadata"}}
+  <title>korotole | books</title>
+  {{template "Metadata"}}
 </head>
 
 <body>
-    <div class="b-page">
+  <div class="b-page">
 
-        {{template "Topper"}}
+    {{template "Topper"}}
 
-        <div class="tabs-nav">
-            <div class="tab-special">
-                <button class="tab-button tablink active" onclick="openTab(event,'Edit')">✏️</button>
-            </div>
-            <div class="tabs">
-                <button class="tab-button tablink" onclick="openTab(event,'Finished')">🏁 Finished</button>
-                <button class="tab-button tablink" onclick="openTab(event,'Planned')">📌 Planned</button>
-            </div>
-            <div class="tab-special">
-                <button class="tab-button tablink" onclick="openTab(event,'Search')">🔍</button>
-            </div>
-        </div>
-
-        <div id="Edit" class="tab-content">
-            <h2>Edit tab</h2>
-            <p>Please, add another book.</p>
-        </div>
-
-        <div id="Search" class="tab-content" style="display:none">
-            <h2>Search</h2>
-            <p>Search for books.</p>
-        </div>
-
-        <div id="Finished" class="tab-content" style="display:none">
-            <h2>Finished</h2>
-            <p>Search for books.</p>
-        </div>
-
-        <div id="Planned" class="tab-content" style="display:none">
-            <h2>Planned</h2>
-            <p>List of books that are to be read.</p>
-        </div>
-
-
-        {{template "Footer" .}}
-
+    <div class="tabs-nav">
+      <div class="tab-special">
+        <button class="tab-button tablink active" onclick="openTab(event,'Edit')">✏️</button>
+      </div>
+      <div class="tabs">
+        <button class="tab-button tablink" onclick="openTab(event,'Finished')">🏁 Finished</button>
+        <button class="tab-button tablink" onclick="openTab(event,'Planned')">📌 Planned</button>
+      </div>
+      <div class="tab-special">
+        <button class="tab-button tablink" onclick="openTab(event,'Search')">🔍</button>
+      </div>
     </div>
+
+    <div id="Edit" class="tab-content" style="display:block">
+      <h2>Edit tab</h2>
+      <p>Please, add another book.</p>
+    </div>
+
+    <div id="Search" class="tab-content" style="display:none">
+      <h2>Search</h2>
+      <p>Search for books.</p>
+    </div>
+
+    <div id="Finished" class="tab-content" style="display:none">
+      <h2>Finished</h2>
+      <p>Search for books.</p>
+      <div class="book">
+        <h4>Herculaneum Scrolls</h4>
+        <p>V informatice se jedná o odborný technický pojem, kterým je označen zvláštní datový typ (běžnější je string
+          nebo řetězec) nebo datový formát. Text je cokoliv, co je uloženo v textovém formátu (t.j. přímo v textových
+          znacích, kódovaných např. v ASCII, ANSI, Unicode, UTF-8, …), a to i v případě, že daný textový řetězec
+          (posloupnost znaků) nedává žádný smysl v žádném přirozeném ani formálním jazyce, a dokonce i v případě, že
+          délka textu je nulová (0 znaků). Podstatný je zde typ nebo formát, kde pevnému počtu bajtů (počítačových slov)
+          odpovídá vždy konkrétní znak dané abecedy.
+
+          Text (dle jazykovědy, tj. posloupnost slov, nesoucí význam) nakreslený v obrázku (tj. např. vyfotografovaná
+          cedule s nápisem) není z pohledu informatiky „prostým textem“ (anglicky plain text), neboť „z pohledu
+          počítače“ se již nejedná o soubor písmen, ale o binární data grafických objektů (různě barevné body, křivky,
+          …) respektive se jedná o datový typ nebo formát, jenž není z hlediska informatiky považován za textový. V
+          tomto formátu text není zakódován po jednotlivých znacích dané abecedy v daném počtu bajtů.
+
+          Nicméně, dekódování původního textu z různých grafických netextových formátů je dnes běžně možné pomocí
+          specializovaného software, např. pomocí OCR programů s relativně vysokou mírou přesnosti. </p>
+      </div>
+    </div>
+
+    <div id="Planned" class="tab-content" style="display:none">
+      <h2>Planned</h2>
+      <p>List of books that are to be read.</p>
+      <div class="book">
+        Programming Scrolls
+      </div>
+    </div>
+
+
+    {{template "Footer" .}}
+
+  </div>
 </body>
 
 <script>
-    function openTab(evt, cityName) {
-        var i, x, tablinks;
-        x = document.getElementsByClassName("tab-content");
-        for (i = 0; i < x.length; i++) {
-            x[i].style.display = "none";
-        }
-        tablinks = document.getElementsByClassName("tablink");
-        for (i = 0; i < x.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-        document.getElementById(cityName).style.display = "block";
-        evt.currentTarget.className += " active";
+  function openTab(evt, tabName) {
+    var i, x, tablinks;
+    x = document.getElementsByClassName("tab-content");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
     }
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < x.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+  document.querySelectorAll('.book').forEach(book => {
+    // Create resizer element once outside of the loop
+    const resizer = document.createElement('div');
+    resizer.className = 'resizer';
+    book.appendChild(resizer);
+    book.classList.add('resizable');
+
+    // Constants
+    const MIN_HEIGHT = 60;
+    const MAX_HEIGHT = 780;
+    const STEP = 1;
+
+    // Variables for drag state
+    let startY, startHeight;
+    let isDragging = false;
+
+    // Optimization: Use passive event listeners where possible
+    // Optimization: Store reference to bound functions for removal
+    const initDrag = function (e) {
+      // Prevent default only for mouse events (not for passive touch events)
+      if (e.type === 'mousedown') {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      // Get starting positions
+      startY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+      startHeight = parseInt(window.getComputedStyle(book).height, 10);
+      isDragging = true;
+
+      // Add event listeners to document only when dragging starts
+      document.addEventListener('mousemove', doDrag, { passive: false });
+      document.addEventListener('touchmove', doDrag, { passive: false });
+      document.addEventListener('mouseup', stopDrag);
+      document.addEventListener('touchend', stopDrag);
+      document.addEventListener('touchcancel', stopDrag);
+    };
+
+    // Optimization: Use requestAnimationFrame for smoother resizing
+    let animationFrameId = null;
+
+    const doDrag = function (e) {
+      if (!isDragging) return;
+
+      // Prevent default to avoid scrolling while resizing
+      e.preventDefault();
+
+      // Get current position
+      const currentY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+
+      // Optimization: Use requestAnimationFrame to throttle visual updates
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+
+      animationFrameId = requestAnimationFrame(() => {
+        const rawHeight = startHeight + currentY - startY;
+        const snapped = Math.round(rawHeight / STEP) * STEP;
+        const clamped = Math.max(MIN_HEIGHT, Math.min(snapped, MAX_HEIGHT));
+        book.style.height = clamped + 'px';
+      });
+    };
+
+    const stopDrag = function () {
+      // Cancel any pending animation frame
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+
+      isDragging = false;
+
+      // Clean up event listeners when done
+      document.removeEventListener('mousemove', doDrag);
+      document.removeEventListener('touchmove', doDrag);
+      document.removeEventListener('mouseup', stopDrag);
+      document.removeEventListener('touchend', stopDrag);
+      document.removeEventListener('touchcancel', stopDrag);
+    };
+
+    // Add initial event listeners with proper options
+    resizer.addEventListener('mousedown', initDrag, { passive: false });
+    resizer.addEventListener('touchstart', initDrag, { passive: true });
+  });
 </script>
 
 </html>
