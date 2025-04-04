@@ -13,28 +13,36 @@
 
         <div class="tabs-nav">
             <div class="tab-special">
-                <button class="tab-button tablink" onclick="openCity(event,'Paris')">✏️</button>
+                <button class="tab-button tablink active" onclick="openTab(event,'Edit')">✏️</button>
             </div>
             <div class="tabs">
-                <button class="tab-button tablink active" onclick="openCity(event,'London')">🏁 Finished</button>
-                <button class="tab-button tablink" onclick="openCity(event,'Paris')">📌 Planned</button>
+                <button class="tab-button tablink" onclick="openTab(event,'Finished')">🏁 Finished</button>
+                <button class="tab-button tablink" onclick="openTab(event,'Planned')">📌 Planned</button>
             </div>
             <div class="tab-special">
-                <button class="tab-button tablink" onclick="openCity(event,'Paris')">🔍</button>
+                <button class="tab-button tablink" onclick="openTab(event,'Search')">🔍</button>
             </div>
         </div>
 
-        <div id="London" class="tab-content">
-            <h2>London</h2>
-            <p>London is the capital city of England.</p>
+        <div id="Edit" class="tab-content">
+            <h2>Edit tab</h2>
+            <p>Please, add another book.</p>
         </div>
 
-        <div id="Paris" class="tab-content" style="display:none">
-            <h2>Paris</h2>
-            <p>Paris is the capital of France.</p>
+        <div id="Search" class="tab-content" style="display:none">
+            <h2>Search</h2>
+            <p>Search for books.</p>
         </div>
 
+        <div id="Finished" class="tab-content" style="display:none">
+            <h2>Finished</h2>
+            <p>Search for books.</p>
+        </div>
 
+        <div id="Planned" class="tab-content" style="display:none">
+            <h2>Planned</h2>
+            <p>List of books that are to be read.</p>
+        </div>
 
 
         {{template "Footer" .}}
@@ -43,7 +51,7 @@
 </body>
 
 <script>
-    function openCity(evt, cityName) {
+    function openTab(evt, cityName) {
         var i, x, tablinks;
         x = document.getElementsByClassName("tab-content");
         for (i = 0; i < x.length; i++) {
