@@ -26,7 +26,7 @@
 
     <div id="Edit" class="subtabs-nav">
 
-      <div class="tab-vertical-buttons-left" >
+      <div class="tab-vertical-buttons-left">
         <div class="tab-special-v" id="AddBtn">
           <button class="tab-button subtablink" onclick="openSubTab(event,'Add')">➕</button>
         </div>
@@ -36,14 +36,37 @@
       </div>
 
       <div id="Add" class="subtab-content" style="display:none">
-        <h2>Add a book</h2>
-        <p>!!!!!!!!</p>
+        <div class="horizontal">
+          <form id="add-form" class="edit-form" action="/newsletter-register" method="POST">
+              <div class="edit-form-box">
+                <label id="newsletter-label" for="ID-title">Title:&nbsp;&nbsp;</label>
+                <input type="text" id="ID-title" name="title" placeholder="Capital" data-original-placeholder="Capital">
+              </div>
+              <div style="height: 20px;"></div> <!-- Spacer -->
+              <div class="edit-form-box">
+                <label id="newsletter-label" for="ID-author">Author:&nbsp;&nbsp;</label>
+                <input type="text" id="ID-author" name="author" placeholder="Karl Marx"
+                  data-original-placeholder="Karl Marx">
+              </div>
+          </form>
+          <div class="tab-vertical-buttons-left">
+            <div class="tab-special-v" id="AddBtn">
+              <button class="tab-button subtablink" onclick="openSubTab(event,'Add')">📤</button>
+            </div>
+            <div class="tab-special-v" id="DeleteBtn">
+              <button class="tab-button subtablink" onclick="openSubTab(event,'Delete')">🗑️</button>
+            </div>
+          </div>
+        </div>
       </div>
+
       <div id="Delete" class="subtab-content" style="display:none">
         <h2>Remove a book</h2>
         <p>??????</p>
       </div>
     </div>
+
+    <!-- БЕГУЩАЯ СТРОКА СВЕРХУ -->
 
     <div id="Search" class="tab-content" style="display:none">
       <h2>Search</h2>
@@ -110,6 +133,26 @@
 <script>
   function openTab(evt, tabName) {
     var i, x, tablinks;
+    if (tabName != "Edit") {
+      x = document.getElementsByClassName("subtab-content");
+      for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+      }
+      x = document.getElementsByClassName("tab-special-v");
+      for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("subtablink");
+      for (i = 0; i < x.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+    } else {
+      x = document.getElementsByClassName("tab-special-v");
+      for (i = 0; i < x.length; i++) {
+        x[i].style.display = "block";
+      }
+    }
+
     x = document.getElementsByClassName("tab-content");
     for (i = 0; i < x.length; i++) {
       x[i].style.display = "none";

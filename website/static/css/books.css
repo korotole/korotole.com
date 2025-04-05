@@ -7,7 +7,7 @@
 .tabs-nav {
     padding-left: auto;
     padding-right: auto;
-    margin-bottom: none;
+    margin-bottom: 30px;
     display: flex !important;
     align-items: center;
 }
@@ -17,7 +17,7 @@
     padding-right: auto;
     margin-bottom: none;
     display: flex !important;
-    align-items: center;
+    align-items:start;
 }
 
 .tabs {
@@ -46,7 +46,7 @@
 }
 
 .tab-special-v {
-    margin-top: 5px;
+    margin-bottom: 5px;
     font-size: 1.1em;
     border-radius: 12px;
     background: #f9f9f9;
@@ -69,7 +69,7 @@
     border: none;
     cursor: pointer;
     font-size: 1em;
-    font-weight: 600;
+    font-weight: 550;
     transition: all 0.1s ease;
     flex: 1;
     text-align: center;
@@ -90,13 +90,11 @@
 .tab-content {
     display: none;
     margin: 10px;
-    /* padding: 30px; */
 }
 
 .subtab-content {
     display: none;
-    margin: 10px;
-    /* padding: 30px; */
+    margin-left: 10px;
 }
 
 .tab-content.active {
@@ -168,29 +166,62 @@
   .resizable.dragging .resizer::after {
     background-color: #4a90e2;
     width: 116px;
-    /* transition: ease 0.2s; */
     transition: ease 0.2s;
   }
 
-  /* .resizer {
-    width: 120px;
-    height: 8px;
-    background: #999;
+.horizontal {
+    display: flex !important;
+    flex-direction: row;
+    align-items: start;
+    min-width: auto;
+}
+
+.edit-form {
+    display: flex !important;
+    flex: 1;
+    min-width: 100%;
+    flex-direction: column;
+    align-items: start;
+    margin-right: 10px;
+    padding: 12px;
+    border-radius: 8px;
+    background: #f9f9f9;
+    border: 1px solid #e1e4e8;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.edit-form-box {
+    background: #f9f9f9;
+    /* min-width: 250px; */
+    font-size: 1.1em;
+    font-weight: 700;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    vertical-align: middle;
+    white-space: nowrap;
+    flex: 1;
+}
+
+.edit-form-box input {
+    flex: 1;
+    font-size: 1.1em;
     color: #000;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 0;
-    cursor: ns-resize;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-    margin-top: 8px;
-    opacity: 0;
-    transition: opacity 0.01s ease-in-out;
-    opacity: 1;
-} */
+    border: none;
+    outline: none;
+    background: #f9f9f9;
+    padding-left: 5px;
+    padding-right: 5px;
+    min-width: 100%;
+    /* min-width: 250px; */
+    font-family: Consolas, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New;
+}
+
+.form-box input::placeholder {
+    color: #777;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -238,6 +269,11 @@
     .resizer::after {
         background-color: #fff;
     }
+
+    .edit-form {
+        background: #212121;
+        border: 1px solid #4a4a4a;
+    }
 }
 
 /* Mobile (469px and below) */
@@ -250,3 +286,24 @@
         font-size: 1.3em;
     }
 }
+
+/* Optional: Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+
+    .edit-form-box input {
+        background: #212121;
+        color: #fff;
+    }
+    .edit-form-box {
+        background: #212121;
+        color: #fff;
+    }
+}
+
+/* Mobile (469px and below)
+@media only screen and (min-width: 460px) {
+    .edit-form-box,
+    .edit-form-box input {
+        min-width: 300px;
+    }
+} */
